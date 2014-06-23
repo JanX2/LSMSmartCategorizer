@@ -103,7 +103,7 @@ enum {
 	NSMutableArray *allowedTypes = [NSMutableArray new];
 	[allowedTypes addObject:@"lsm"];
 	if ([panel runModalForDirectory:@"~" file:nil types:allowedTypes] == NSOKButton) {
-		NSString *mapPath = [[panel filenames] objectAtIndex:0];
+		NSString *mapPath = [panel filenames][0];
         
 		//read the map into classifier
 		if ([_classifier readFromFile:mapPath with:kLSMCEvaluation] == noErr) {
@@ -141,7 +141,7 @@ enum {
 		NSMutableArray *pendingURLs = [NSMutableArray array];
 		unsigned i = 0;
 		for (; i < [selected count]; ++i) {
-			[self appendPathsAt:[selected objectAtIndex:i] toURLArray:pendingURLs];
+			[self appendPathsAt:selected[i] toURLArray:pendingURLs];
 		}
         
 		//Start loading the URLs. (Asynchronously)
@@ -205,7 +205,7 @@ enum {
 		[enteredStr replaceCharactersInRange:NSMakeRange(0, 5) withString:@"http:"];
 	}
     
-	NSArray *pendingURLs = [NSArray arrayWithObject:[NSURL URLWithString:enteredStr]];
+	NSArray *pendingURLs = @[[NSURL URLWithString:enteredStr]];
     
 	//Start loading the URL. (Asynchronously)
 	[_urlLoader load:pendingURLs];

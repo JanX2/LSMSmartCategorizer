@@ -289,7 +289,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 
 - (DataInfo *)childAt:(unsigned)index
 {
-	return [fChildren objectAtIndex:index];
+	return fChildren[index];
 }
 
 - (void)removeAllChildren

@@ -138,7 +138,7 @@ NSString* gNameToIdMap = @"NameToIdMap";
 
 - (OSStatus)addCategory:(NSString *)name
 {
-	NSNumber *mapId = [catNameToIdMap objectForKey:name];
+	NSNumber *mapId = catNameToIdMap[name];
 	if (mapId) {
 		return kLSMCDuplicatedCategory;
 	}
@@ -151,7 +151,7 @@ NSString* gNameToIdMap = @"NameToIdMap";
 
 - (OSStatus)addTrainingText:(NSString *)text toCategory:(NSString *)name with:(UInt32)option
 {
-	NSNumber *mapId = [catNameToIdMap objectForKey:name];
+	NSNumber *mapId = catNameToIdMap[name];
 	if (!mapId) {
 		return kLSMCNoSuchCategory;
 	}
@@ -221,7 +221,7 @@ NSString* gNameToIdMap = @"NameToIdMap";
 	//Note, if you plan to store NSDictionary object in the property list, the key
 	//has to be NSString.
 	NSMutableDictionary *dict = [NSMutableDictionary new];
-	[dict setObject:catNameToIdMap forKey:gNameToIdMap];
+	dict[gNameToIdMap] = catNameToIdMap;
 	LSMMapSetProperties(map, (__bridge CFDictionaryRef)dict);
 	
 	NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
@@ -245,14 +245,14 @@ NSString* gNameToIdMap = @"NameToIdMap";
 	else {
 		NSDictionary *idNameMaps = (__bridge NSDictionary *)LSMMapGetProperties(map);
 		if (idNameMaps) {
-			NSDictionary *dict = [idNameMaps objectForKey:gNameToIdMap];
+			NSDictionary *dict = idNameMaps[gNameToIdMap];
 			if (dict) {
 				catNameToIdMap = [[NSMutableDictionary alloc] initWithDictionary:dict];
 				catIdToNameMap = [NSMutableDictionary new];
 				NSEnumerator *keys = [catNameToIdMap keyEnumerator];
 				NSString *key;
 				while (key = [keys nextObject]) {
-					[catIdToNameMap setObject:key forKey:[catNameToIdMap objectForKey:key]];
+					catIdToNameMap[catNameToIdMap[key]] = key;
 				}
 			}
 			else {
@@ -280,9 +280,9 @@ NSString* gNameToIdMap = @"NameToIdMap";
 ///// private methods /////
 - (void)mapCategoryId:(LSMCategory)index toName:(NSString *)name
 {
-	NSNumber *idNumber = [[NSNumber alloc] initWithUnsignedInt:index];
-	[catIdToNameMap setObject:name forKey:idNumber];
-	[catNameToIdMap setObject:idNumber forKey:name];
+	NSNumber *idNumber = @(index);
+	catIdToNameMap[idNumber] = name;
+	catNameToIdMap[name] = idNumber;
 }
 
 @end

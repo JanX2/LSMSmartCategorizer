@@ -69,16 +69,16 @@ NSString* gScoreKey = @"score";
 			NSMutableDictionary *singleResult = [NSMutableDictionary new];
 			
 			//Get the category id of the ith result.
-			NSNumber *categoryId = [[NSNumber alloc] initWithUnsignedInt:LSMResultGetCategory(lsmResult, i)];
+			NSNumber *categoryId = @(LSMResultGetCategory(lsmResult, i));
 			
 			//map id to name
-			NSString *categoryName = [map objectForKey:categoryId];
+			NSString *categoryName = map[categoryId];
 			
 			//Get the score of the ith result.
-			NSNumber *score = [[NSNumber alloc] initWithFloat:LSMResultGetScore(lsmResult, i)];
+			NSNumber *score = @(LSMResultGetScore(lsmResult, i));
 			
-			[singleResult setObject:categoryName forKey:gCategoryKey];
-			[singleResult setObject:score forKey:gScoreKey];
+			singleResult[gCategoryKey] = categoryName;
+			singleResult[gScoreKey] = score;
 			
 			[results addObject:singleResult];
 		}
@@ -98,7 +98,7 @@ NSString* gScoreKey = @"score";
 		return nil;
 	}
 	else {
-		return [[results objectAtIndex:index] objectForKey:gCategoryKey];
+		return results[index][gCategoryKey];
 	}
 }
 
@@ -108,7 +108,7 @@ NSString* gScoreKey = @"score";
 		return nil;
 	}
 	else {
-		return [[results objectAtIndex:index] objectForKey:gScoreKey];
+		return results[index][gScoreKey];
 	}
 }
 

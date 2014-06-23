@@ -89,7 +89,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[panel setCanChooseFiles:NO];
 	[panel setCanChooseDirectories:YES];
 	if ([panel runModalForDirectory:@"~" file:nil types:nil] == NSOKButton) {
-		NSString *topDataPath = [[panel filenames] objectAtIndex:0];
+		NSString *topDataPath = [panel filenames][0];
 		[self log:[NSString stringWithFormat:@"Loading data from %@\n", topDataPath]];
         
 		//start loading data from specified directory.
@@ -119,7 +119,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[panel setCanChooseFiles:YES];
 	[panel setCanChooseDirectories:NO];
 	if ([panel runModalForDirectory:startupPath file:filename types:nil] == NSOKButton) {
-		NSString *plistPath = [[panel filenames] objectAtIndex:0];
+		NSString *plistPath = [panel filenames][0];
         
 		//start loading from URLs specified by the plist.
 		[self readDataSpecifiedByPlist:plistPath];
@@ -350,7 +350,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 		[self log:[NSString stringWithFormat:@"found category \"%@\"", catName]];
 		CategoryDataInfo *catDataInfo = [[CategoryDataInfo alloc] initWithTitle:catName];
         
-		NSArray *feedArray = [catDict objectForKey:catName];
+		NSArray *feedArray = catDict[catName];
         
 		//each category contains a list of URLs.
 		NSEnumerator *feedEnum = [feedArray objectEnumerator];
