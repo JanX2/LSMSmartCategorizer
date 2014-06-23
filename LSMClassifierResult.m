@@ -64,19 +64,18 @@ NSString* gScoreKey = @"score";
 		
 		//put individual result into the array
 		SInt32 count = LSMResultGetCount(lsmResult);
-		SInt32 i=0;
-		for (; i<count; i++)
-		{
-			NSMutableDictionary* singleResult = [NSMutableDictionary new];
+		SInt32 i = 0;
+		for (; i < count; i++) {
+			NSMutableDictionary *singleResult = [NSMutableDictionary new];
 			
 			//Get the category id of the ith result.
-			NSNumber* categoryId = [[NSNumber alloc] initWithUnsignedInt:LSMResultGetCategory(lsmResult, i)];
+			NSNumber *categoryId = [[NSNumber alloc] initWithUnsignedInt:LSMResultGetCategory(lsmResult, i)];
 			
 			//map id to name
-			NSString* categoryName = [map objectForKey:categoryId];
+			NSString *categoryName = [map objectForKey:categoryId];
 			
 			//Get the score of the ith result.
-			NSNumber* score = [[NSNumber alloc] initWithFloat:LSMResultGetScore(lsmResult, i)];
+			NSNumber *score = [[NSNumber alloc] initWithFloat:LSMResultGetScore(lsmResult, i)];
 			
 			[singleResult setObject:categoryName forKey:gCategoryKey];
 			[singleResult setObject:score forKey:gScoreKey];
@@ -94,29 +93,35 @@ NSString* gScoreKey = @"score";
 
 - (void)dealloc
 {
-	if (results) CFRelease(results);
+	if (results) {
+		CFRelease(results);
+	}
 	[super dealloc];
 }
 
-- (unsigned) getResultCount
+- (unsigned)getResultCount
 {
 	return [results count];
 }
 
-- (NSString*) getCategoryName:(UInt32)index
+- (NSString *)getCategoryName:(UInt32)index
 {
-	if (index >= [results count])
+	if (index >= [results count]) {
 		return nil;
-	else
+	}
+	else {
 		return [[results objectAtIndex:index] objectForKey:gCategoryKey];
+	}
 }
 
-- (NSNumber*) getScore:(UInt32)index
+- (NSNumber *)getScore:(UInt32)index
 {
-	if (index >= [results count])
+	if (index >= [results count]) {
 		return nil;
-	else
+	}
+	else {
 		return [[results objectAtIndex:index] objectForKey:gScoreKey];
+	}
 }
 
 @end

@@ -77,10 +77,10 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 
 - (unsigned)numberOfChildren;
 - (BOOL)isLeaf;
-- (NSString*)title;
-- (NSURL*)url;
-- (NSString*)urlString;
-- (NSString*)score;
+- (NSString *)title;
+- (NSURL *)url;
+- (NSString *)urlString;
+- (NSString *)score;
 
 @end
 
@@ -89,11 +89,11 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
  *           Training window.
  */
 @interface URLDataInfo : DataInfo {
-	NSString* fTitle;
-	NSURL* fURL;	
+	NSString *fTitle;
+	NSURL *fURL;
 }
 
-- (id)initWithURL:(NSURL*)aURL andTitle:(NSString*)aTitle;
+- (id)initWithURL:(NSURL *)aURL andTitle:(NSString *)aTitle;
 
 @end
 
@@ -104,29 +104,29 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
  * This class contains an instance of PSFeed, defined by PubSub.framework.
  */
 @interface FeedDataInfo : DataInfo {
-	PSFeed* fFeed;
-	NSNumber* fScore;
+	PSFeed *fFeed;
+	NSNumber *fScore;
 }
 
-- (id)initWithFeed:(PSFeed*)feed;
-- (PSFeed*)feed;
-- (NSString*)plainText; //< The plain text representation (i.e. without html tags) of the feed.
-- (void)setScore:(NSNumber*)score;
+- (id)initWithFeed:(PSFeed *)feed;
+- (PSFeed *)feed;
+- (NSString *)plainText; //< The plain text representation (i.e. without html tags) of the feed.
+- (void)setScore:(NSNumber *)score;
 
-@end 
+@end
 
 /*!
  * @abstract Non-leaf node type used by the datasources for both outline views.
  */
 @interface CategoryDataInfo : DataInfo {
-	NSString* fTitle;
-	NSMutableArray* fChildren;
+	NSString *fTitle;
+	NSMutableArray *fChildren;
 }
 
-- (id)initWithTitle:(NSString*)aTitle;
-- (void)addChild:(DataInfo*)child;
-- (NSEnumerator*)childEnumerator;
-- (DataInfo*)childAt:(unsigned)index;
+- (id)initWithTitle:(NSString *)aTitle;
+- (void)addChild:(DataInfo *)child;
+- (NSEnumerator *)childEnumerator;
+- (DataInfo *)childAt:(unsigned)index;
 - (void)removeAllChildren;
 
 @end

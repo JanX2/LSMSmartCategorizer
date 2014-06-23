@@ -57,11 +57,11 @@
  * controls and functionalities. So we put those in this super class.
  */
 @interface BaseWindowController : NSObject {
-	IBOutlet NSTextField* trainStatusText; /**< status text field. */
-	IBOutlet NSTextView * logTextView; /**< log text view. */
-	IBOutlet NSOutlineView* outlineView; /**< outline view that display categorized data */
-	CategoryDataInfo* topLevelDataInfo; /**< Outline view data source. */
-	
+	IBOutlet NSTextField *trainStatusText; /**< status text field. */
+	IBOutlet NSTextView *logTextView; /**< log text view. */
+	IBOutlet NSOutlineView *outlineView; /**< outline view that display categorized data */
+	CategoryDataInfo *topLevelDataInfo; /**< Outline view data source. */
+    
 	//
 	// These two variables are used by the availability bind of several controls,
 	// such as buttons and progress indicators.
@@ -71,7 +71,7 @@
 	//                some tasks is very hard to implement. For those tasks, even
 	//                cancel button is diabled.
 	//
-	BOOL busy; 
+	BOOL busy;
 	BOOL cancelEnabled;
 }
 
@@ -94,31 +94,31 @@
 /*!
  * @abstract Private routines.
  */
-@interface BaseWindowController(Private)
+@interface BaseWindowController (Private)
 /*!
  * @abstract Set the user interface (UI) to busy that does not allow cancellation.
  * @input statusText Test to be displayed on status text field.
  */
-- (void) setUIAllBusy:(NSString*)statusText;
+- (void)setUIAllBusy:(NSString *)statusText;
 
 /*!
  * @abstract Set the user interface (UI) to busy that allows cancellation.
  * @input statusText Test to be displayed on status text field.
  */
-- (void) setUICancellableBusy:(NSString*)statusText;
+- (void)setUICancellableBusy:(NSString *)statusText;
 
 /*!
  * @abstract Set the user interface (UI) to idle.
  */
-- (void) setUIIdle;
+- (void)setUIIdle;
 
 /*!
  * @abstract Append msg to log textView.
  */
-- (void) log:(NSString*) msg;
+- (void)log:(NSString *)msg;
 
 /*!
  * @abstract Make the outline view to reload data source.
  */
-- (void) reloadOutlineView;
+- (void)reloadOutlineView;
 @end

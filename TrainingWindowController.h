@@ -56,7 +56,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 
 /*!
  * @abstract Window controller of training window.
- * 
+ *
  * Training window allows users to:
  * - Load training data from a directory (the required hierachy of the directory
  *   is defined in ReadMe.txt.).
@@ -67,12 +67,12 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 @interface TrainingWindowController : BaseWindowController
 {
 	IBOutlet NSWindow *window;
-	IBOutlet NSWindow* helpWindow; /**< A help window. */
-	IBOutlet NSTextView* helpTextView; /**< Help text view. */
-
+	IBOutlet NSWindow *helpWindow; /**< A help window. */
+	IBOutlet NSTextView *helpTextView; /**< Help text view. */
 	
-	URLLoader* _urlLoader;
-	CategoryDataInfo* _tmpURLDataInfo; /**< Store categorized trianing data URLs before add them into outline view data source, i.e. topLevelDataInfo. */
+	
+	URLLoader *_urlLoader;
+	CategoryDataInfo *_tmpURLDataInfo; /**< Store categorized trianing data URLs before add them into outline view data source, i.e. topLevelDataInfo. */
 }
 
 /*!

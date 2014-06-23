@@ -65,13 +65,13 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  *  @constant kLSMSetModeFailed        Failed to set mode.
  */
 enum {
-	kLSMCErr				   = 1000,
-	kLSMCDuplicatedCategory    = 1001,
-	kLSMCNoSuchCategory		   = 1002,
-	kLSMCWriteError			   = 1003,
-	kLSMCBadPath               = 1004,
-	kLSMCNotValidMode		   = 1005,
-	kLSMSetModeFailed          = 1006
+	kLSMCErr                = 1000,
+	kLSMCDuplicatedCategory = 1001,
+	kLSMCNoSuchCategory     = 1002,
+	kLSMCWriteError         = 1003,
+	kLSMCBadPath            = 1004,
+	kLSMCNotValidMode       = 1005,
+	kLSMSetModeFailed       = 1006
 };
 
 
@@ -95,21 +95,19 @@ enum {
 	 * store the current mode, and only switch when necessary. You can also explicitly
 	 * set the classifier into a particular mode.
 	 */
-	unsigned  currentMode;
+	unsigned currentMode;
 	
 	/*!
 	 * @abstract Category Id to category name map.
 	 */
-	NSMutableDictionary* catIdToNameMap;
+	NSMutableDictionary *catIdToNameMap;
 	
 	/*!
 	 * @abstract Category name to category Id map.
-	 * 
+	 *
 	 * So that user can refer to a particular category by a meaningful name.
 	 */
-	NSMutableDictionary* catNameToIdMap;
-	
-	
+	NSMutableDictionary *catNameToIdMap;
 }
 
 - (id)init;
@@ -127,14 +125,14 @@ enum {
 
 /*!
  * @abstract Add new cateogry.
- * 
+ *
  * @return noErr The category was successfully added into the map.
  * @return kLSMCDuplicatedCategory The category name has already existed.
  *
  * If current mode is kLSMCEvaluation, on successful return, this method will set
  * mode to kLSMCTraining.
  */
-- (OSStatus)addCategory:(NSString*)name;
+- (OSStatus)addCategory:(NSString *)name;
 
 /*!
  * @abstract Add training text to category specified by name.
@@ -145,10 +143,10 @@ enum {
  * If current mode is kLSMCEvaluation, on successful return, this method will set
  * mode to kLSMCTraining.
  *
- * option can be kLSMTextPreserveCase, kLSMTextPreserveAcronyms 
+ * option can be kLSMTextPreserveCase, kLSMTextPreserveAcronyms
  * and/or kLSMTextApplySpamHeuristics.
  */
-- (OSStatus)addTrainingText:(NSString*)text toCategory:(NSString*)name with:(UInt32)option;
+- (OSStatus)addTrainingText:(NSString *)text toCategory:(NSString *)name with:(UInt32)option;
 
 /**!
  * @abstract Evaluate input text and return the results.
@@ -160,7 +158,7 @@ enum {
  *
  * If current mode is kLSMCTraining, this method will set mode to kLSMCEvaluation.
  */
-- (LSMClassifierResult*)createResultFor:(NSString*)text upTo:(SInt32)numOfResults with:(UInt32)textOption;
+- (LSMClassifierResult *)createResultFor:(NSString *)text upTo:(SInt32)numOfResults with:(UInt32)textOption;
 
 /**!
  * @abstract Return number of categories in the map.
@@ -169,21 +167,21 @@ enum {
 
 /**!
  * @abstract Return category enumerator.
- * 
+ *
  * Use [NSEnumerator nextObject] to get the category name string.
  */
-- (NSEnumerator*)categoryEnumerator;
+- (NSEnumerator *)categoryEnumerator;
 
 /**!
  * @abstract Save the internal data to file, including LSM map and the category
  *           Id-name maps.
  */
-- (OSStatus)writeToFile:(NSString*) path;
+- (OSStatus)writeToFile:(NSString *)path;
 
 /**!
  * @abstract Load from specified file, and switch to mode.
  */
-- (OSStatus)readFromFile:(NSString*)path with:(unsigned)mode;
+- (OSStatus)readFromFile:(NSString *)path with:(unsigned)mode;
 
 @end
 

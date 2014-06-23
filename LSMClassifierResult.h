@@ -59,7 +59,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  * which are sorted by their scores.
  */
 @interface LSMClassifierResult : NSObject {
-	NSMutableArray* results;
+	NSMutableArray *results;
 }
 
 - (void)dealloc;
@@ -67,23 +67,23 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 /*!
  * @abstract Return total number of results.
  */
-- (unsigned) getResultCount;
+- (unsigned)getResultCount;
 
 /*!
  * @abstract Get the category name of result specified by index.
  *
- * return nil if the index is not valid. 
+ * return nil if the index is not valid.
  */
-- (NSString*) getCategoryName:(UInt32)index;
+- (NSString *)getCategoryName:(UInt32)index;
 
 /*!
  * @abstract Get the score of result specified by index.
  *
- * return nil if the index is not valid. 
- * 
+ * return nil if the index is not valid.
+ *
  * The underlying type of the score is float.
  */
-- (NSNumber*) getScore:(UInt32)index;
+- (NSNumber *)getScore:(UInt32)index;
 
 @end
 

@@ -64,12 +64,12 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  */
 @interface EvalWindowController : BaseWindowController
 {
-	IBOutlet NSWindow* window;
-	IBOutlet NSWindow* openURLSheet; 
-	IBOutlet NSComboBox* urlBox;
-	
-	URLLoader* _urlLoader;
-	LSMClassifier* _classifier; 
+	IBOutlet NSWindow *window;
+	IBOutlet NSWindow *openURLSheet;
+	IBOutlet NSComboBox *urlBox;
+    
+	URLLoader *_urlLoader;
+	LSMClassifier *_classifier;
 }
 
 /*!

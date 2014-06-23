@@ -78,30 +78,28 @@
 	}
 }
 
-- (void) setUICancellableBusy:(NSString*)statusText
+- (void)setUICancellableBusy:(NSString *)statusText
 {
 	[self setBusy:YES];
 	[self setCancelEnabled:YES];
 	[trainStatusText setTitleWithMnemonic:statusText];
-	
 }
 
-- (void) setUIAllBusy:(NSString*)statusText
+- (void)setUIAllBusy:(NSString *)statusText
 {
 	[self setBusy:YES];
 	[self setCancelEnabled:NO];
 	[trainStatusText setTitleWithMnemonic:statusText];
-	
 }
 
-- (void) setUIIdle
+- (void)setUIIdle
 {
 	[self setBusy:NO];
 	[self setCancelEnabled:NO];
 	[trainStatusText setTitleWithMnemonic:@""];
 }
 
-- (void) log:(NSString*) msg
+- (void)log:(NSString *)msg
 {
 	NSRange endRange;
 	endRange.location = [[logTextView textStorage] length];
@@ -112,52 +110,57 @@
 }
 
 
-- (void) reloadOutlineView {
+- (void)reloadOutlineView
+{
 	[outlineView reloadData];
-	if ([outlineView isItemExpanded:topLevelDataInfo])
+	if ([outlineView isItemExpanded:topLevelDataInfo]) {
 		[outlineView collapseItem:topLevelDataInfo];
+	}
 	[outlineView expandItem:topLevelDataInfo expandChildren:YES];
 }
 
 /////////////// NSOutlineView datasource protocol //////////////////////
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
+{
 	if (item == nil) {
-		
 		return YES;
 	}
 	else {
-		DataInfo* dataInfo = (DataInfo*)item;
+		DataInfo *dataInfo = (DataInfo *)item;
 		return ![dataInfo isLeaf];
 	}
 }
 
-- (int)outlineView:(NSOutlineView*)outlineView numberOfChildrenOfItem:(id)item {
+- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+{
 	if (item == nil) {
-		
 		return 1;
 	}
 	else {
-		DataInfo* dataInfo = (DataInfo*)item;
+		DataInfo *dataInfo = (DataInfo *)item;
 		return [dataInfo numberOfChildren];
 	}
 }
 
-- (id)outlineView:(NSOutlineView*)outlineView child:(int)index ofItem:(id)item {
-	if (item == nil)
+- (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
+{
+	if (item == nil) {
 		return topLevelDataInfo;
+	}
 	else {
-		CategoryDataInfo* dataInfo = (CategoryDataInfo*)item;
+		CategoryDataInfo *dataInfo = (CategoryDataInfo *)item;
 		return [dataInfo childAt:index];
 	}
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-	if (item == nil)
+	if (item == nil) {
 		return @"";
-	else
+	}
+	else {
 		return [item valueForKey:[tableColumn identifier]];
-	
+	}
 }
 
 @end

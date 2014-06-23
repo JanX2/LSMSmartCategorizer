@@ -56,18 +56,18 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
  */
 @interface URLDataReceiver : NSObject {
 	int fStatus;
-	NSURL* fURL;
-	NSMutableData* fReceived; /**< Received data */
-	NSError* fError; /**< Last error if an error occurs during loading.*/
+	NSURL *fURL;
+	NSMutableData *fReceived; /**< Received data */
+	NSError *fError; /**< Last error if an error occurs during loading.*/
 	id fDelegate;
-	NSRecursiveLock* fLock;
-	NSURLConnection* fConnection;
+	NSRecursiveLock *fLock;
+	NSURLConnection *fConnection;
 }
 
 /*!
  * delegate must conform to URLDataReceiverDelegate protocol.
  */
-- (id)initWithURL:(NSURL*)aURL delegate:(id)delegate;
+- (id)initWithURL:(NSURL *)aURL delegate:(id)delegate;
 
 /*!
  * @abstract Start loading data.
@@ -87,28 +87,28 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
  *
  * Return nil if the loading failed or encountered any errors.
  */
-- (NSData*)receivedData;
+- (NSData *)receivedData;
 
 
-- (NSURL*)url;
+- (NSURL *)url;
 
 /*!
  * @abstract Return last error.
  *
  * @note The return value can be nil, which indicates a successful load.
  */
-- (NSError*)lastError;
+- (NSError *)lastError;
 @end
 
 
 /*!
  * @abstract URLDataReceiverDelegate protocol.
  */
-@interface NSObject(URLDataReceiverDelegate)
+@interface NSObject (URLDataReceiverDelegate)
 /*!
  * @abstract Notify delegate that loading has finished.
  *
  * The delegate can use lastError to query if there is any error.
  */
-- (void)URLDataReceiverDidFinish:(URLDataReceiver*)dataReceiver;
+- (void)URLDataReceiverDidFinish:(URLDataReceiver *)dataReceiver;
 @end

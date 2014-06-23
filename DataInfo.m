@@ -53,27 +53,33 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 /////////// DataInfo //////////////
 @implementation DataInfo
 
-- (unsigned) numberOfChildren {
+- (unsigned)numberOfChildren
+{
 	return 0;
 }
 
-- (BOOL)isLeaf {
+- (BOOL)isLeaf
+{
 	return YES;
 }
 
-- (NSString*)title {
+- (NSString *)title
+{
 	return @"";
 }
 
-- (NSURL*)url {
+- (NSURL *)url
+{
 	return nil;
 }
 
-- (NSString*)urlString {
+- (NSString *)urlString
+{
 	return @"";
 }
 
-- (NSString*)score {
+- (NSString *)score
+{
 	return @"";
 }
 
@@ -84,7 +90,8 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 
 @implementation URLDataInfo
 
-- (id)init {
+- (id)init
+{
 	self = [super init];
 	
 	if (self) {
@@ -95,7 +102,8 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	return self;
 }
 
-- (id)initWithURL:(NSURL*)aURL andTitle:(NSString*)aTitle {
+- (id)initWithURL:(NSURL *)aURL andTitle:(NSString *)aTitle
+{
 	[super init];
 	
 	if (self) {
@@ -105,29 +113,39 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	return self;
 }
 
-- (void)dealloc {
-	if (fURL) [fURL release];
-	if (fTitle) [fTitle release];
+- (void)dealloc
+{
+	if (fURL) {
+		[fURL release];
+	}
+	if (fTitle) {
+		[fTitle release];
+	}
 	[super dealloc];
 }
 
-- (unsigned) numberOfChildren {
+- (unsigned)numberOfChildren
+{
 	return 0;
 }
 
-- (BOOL) isLeaf {
+- (BOOL)isLeaf
+{
 	return YES;
 }
 
-- (NSString*)title {
+- (NSString *)title
+{
 	return fTitle;
 }
 
-- (NSURL*)url {
+- (NSURL *)url
+{
 	return fURL;
 }
 
-- (NSString*)urlString {
+- (NSString *)urlString
+{
 	return [fURL absoluteString];
 }
 
@@ -136,9 +154,12 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 //////////// FeedDataInfo //////////////
 @implementation FeedDataInfo
 
-- (id)initWithFeed:(PSFeed*)feed {
+- (id)initWithFeed:(PSFeed *)feed
+{
 	self = [super init];
-	if (self == nil) return nil;
+	if (self == nil) {
+		return nil;
+	}
 	
 	fFeed = [feed retain];
 	fScore = nil;
@@ -146,73 +167,87 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
 	[fFeed release];
-	if (fScore) [fScore release];
+	if (fScore) {
+		[fScore release];
+	}
 	[super dealloc];
 }
 
-- (unsigned)numberOfChildren {
+- (unsigned)numberOfChildren
+{
 	return 0;
 }
 
-- (BOOL)isLeaf {
+- (BOOL)isLeaf
+{
 	return YES;
 }
 
-- (NSString*)title {
+- (NSString *)title
+{
 	return [fFeed title];
 }
 
-- (NSURL*)url {
+- (NSURL *)url
+{
 	return [fFeed URL];
 }
 
-- (NSString*)urlString {
+- (NSString *)urlString
+{
 	return [[fFeed URL] absoluteString];
 }
 
-- (NSString*)plainText {
-	NSMutableString* finalString = [NSMutableString string];
+- (NSString *)plainText
+{
+	NSMutableString *finalString = [NSMutableString string];
 	
 	//cancatenate plain text from each entry.
-	NSEnumerator* entryEnum = [fFeed entryEnumeratorSortedBy:nil];
-	PSEntry* entry;
+	NSEnumerator *entryEnum = [fFeed entryEnumeratorSortedBy:nil];
+	PSEntry *entry;
 	while (entry = [entryEnum nextObject]) {
-		NSString* theTitle = [entry title];
+		NSString *theTitle = [entry title];
 		[finalString appendString:theTitle];
 		
 		//not every entry has all the fields.
 		//so we need to check for nil.
-		PSContent* content;
-		if (content = [entry content])
-		{
-			NSString* plainText = [content plainTextString];
-			if (plainText)
+		PSContent *content;
+		if (content = [entry content]) {
+			NSString *plainText = [content plainTextString];
+			if (plainText) {
 				[finalString appendString:plainText];
+			}
 		}
 		
-		if (content = [entry summary])
-		{
-			NSString* plainText = [content plainTextString];
-			if (plainText)
+		if (content = [entry summary]) {
+			NSString *plainText = [content plainTextString];
+			if (plainText) {
 				[finalString appendString:plainText];
+			}
 		}
 	}
 	
 	return finalString;
 }
 
-- (NSString*)score {
+- (NSString *)score
+{
 	return [fScore stringValue];
 }
 
-- (void)setScore:(NSNumber*)score {
-	if (fScore) [fScore release];
+- (void)setScore:(NSNumber *)score
+{
+	if (fScore) {
+		[fScore release];
+	}
 	fScore = [score retain];
 }
 
-- (PSFeed*)feed {
+- (PSFeed *)feed
+{
 	return fFeed;
 }
 
@@ -221,7 +256,8 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 /////////// CategoryDataInfo //////////////
 @implementation CategoryDataInfo
 
-- (id) init {
+- (id)init
+{
 	self = [super init];
 	if (self) {
 		fTitle = nil;
@@ -230,7 +266,8 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	return self;
 }
 
-- (id) initWithTitle:(NSString*)aTitle {
+- (id)initWithTitle:(NSString *)aTitle
+{
 	self = [super init];
 	if (self) {
 		fTitle = [aTitle copy];
@@ -239,41 +276,55 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	return self;
 }
 
-- (void) dealloc {
-	if (fTitle) [fTitle release];
-	if (fChildren) [fChildren release];
+- (void)dealloc
+{
+	if (fTitle) {
+		[fTitle release];
+	}
+	if (fChildren) {
+		[fChildren release];
+	}
 	[super dealloc];
 }
 
-- (unsigned) numberOfChildren {
+- (unsigned)numberOfChildren
+{
 	return [fChildren count];
 }
 
-- (BOOL) isLeaf {
+- (BOOL)isLeaf
+{
 	return NO;
 }
 
-- (NSString*) title {
+- (NSString *)title
+{
 	return fTitle;
 }
 
-- (NSURL*) url {
+- (NSURL *)url
+{
 	return nil;
 }
 
-- (void)addChild:(DataInfo*)child {
+- (void)addChild:(DataInfo *)child
+{
 	[fChildren addObject:child];
 }
 
-- (NSEnumerator*)childEnumerator {
+- (NSEnumerator *)childEnumerator
+{
 	return [fChildren objectEnumerator];
 }
 
-- (DataInfo*) childAt:(unsigned)index {
+- (DataInfo *)childAt:(unsigned)index
+{
 	return [fChildren objectAtIndex:index];
 }
 
-- (void)removeAllChildren {
+- (void)removeAllChildren
+{
 	[fChildren removeAllObjects];
 }
+
 @end

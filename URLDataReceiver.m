@@ -62,18 +62,21 @@ enum {
 /*!
  * @abstract Private routines.
  */
-@interface URLDataReceiver(Private)
+@interface URLDataReceiver (Private)
 - (void)notifyDidFinish;
-- (void)setError:(NSError*)error;
+- (void)setError:(NSError *)error;
 @end
 
 @implementation URLDataReceiver
 
-- (id)initWithURL:(NSURL*)aURL delegate:(id)delegate {
+- (id)initWithURL:(NSURL *)aURL delegate:(id)delegate
+{
 	self = [super init];
-	
-	if (self == nil) return nil;
-	
+    
+	if (self == nil) {
+		return nil;
+	}
+    
 	fStatus = DRLoading;
 	fURL = [aURL copy];
 	fReceived = [NSMutableData new];
@@ -81,77 +84,99 @@ enum {
 	fDelegate = delegate;
 	fLock = [NSRecursiveLock new];
 	fConnection = nil;
-	
+    
 	return self;
 }
 
-- (void) dealloc {
+- (void)dealloc
+{
 	//cancel it if we are loading.
 	[fLock lock];
-	if (fStatus == DRLoading) [self cancel];
+	if (fStatus == DRLoading) {
+		[self cancel];
+	}
 	[fLock unlock];
-	
-	if (fURL) [fURL release];
-	if (fReceived) [fReceived release];
-	if (fError) [fError release];
-	if (fLock) [fLock release];
-	if (fConnection) [fConnection release];
-	
+    
+	if (fURL) {
+		[fURL release];
+	}
+	if (fReceived) {
+		[fReceived release];
+	}
+	if (fError) {
+		[fError release];
+	}
+	if (fLock) {
+		[fLock release];
+	}
+	if (fConnection) {
+		[fConnection release];
+	}
+    
 	[super dealloc];
 }
 	
 	
 
-- (void)startLoading {
+- (void)startLoading
+{
 	[fLock lock];
-	
+    
 	fStatus = DRLoading;
-	fConnection = [[NSURLConnection alloc] 
-					initWithRequest:[NSURLRequest requestWithURL:fURL]
-					delegate:self];
+	fConnection = [[NSURLConnection alloc]
+	               initWithRequest:[NSURLRequest requestWithURL:fURL]
+	               delegate:self];
 	[fLock unlock];
 }
 
-- (void)cancel {
+- (void)cancel
+{
 	[fLock lock];
-	
+    
 	//return right away if we are not loading.
 	if (fStatus != DRLoading) {
 		[fLock unlock];
 		return;
 	}
-	
+    
 	fStatus = DRCancelled;
-	
-	if (fConnection) [fConnection cancel];
+    
+	if (fConnection) {
+		[fConnection cancel];
+	}
 	[fReceived setLength:0];
-	
+    
 	[fLock unlock];
 }
 
-- (NSData*)receivedData {
+- (NSData *)receivedData
+{
 	return fReceived;
 }
 
-- (NSURL*)url {
+- (NSURL *)url
+{
 	return fURL;
 }
 
-- (NSError*)lastError {
+- (NSError *)lastError
+{
 	return fError;
 }
 
 /////////// NSURLConnection delegate functions //////////////////////////
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
 	[fLock lock];
-	
+    
 	NSAssert(fStatus == DRLoading, @"I should be loadiing.");
 	[fReceived appendData:data];
 	[fLock unlock];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
 	[fLock lock];
 	NSAssert(fStatus != DRFinished, @"Why am I here if I already finished.");
 	fStatus = DRFinished;
@@ -161,8 +186,9 @@ enum {
 	[fLock unlock];
 }
 
-- (void)connection:(NSURLConnection *)connection 
-				didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+- (void)connection:(NSURLConnection *)connection
+didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+{
 	[fLock lock];
 	NSAssert(fStatus != DRFinished, @"Why am I here if I already finished.");
 	[fConnection cancel];
@@ -173,12 +199,14 @@ enum {
 	[fLock unlock];
 }
 
-- (NSURLRequest *)connection:(NSURLConnection *)connection 
-				willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse {
+- (NSURLRequest *)connection:(NSURLConnection *)connection
+             willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
+{
 	return request;
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
 	[fLock lock];
 	NSAssert(fStatus != DRFinished, @"Why am I here if I already finished.");
 	fStatus = DRFinished;
@@ -189,19 +217,25 @@ enum {
 
 /////////////// Private Routines //////////////////
 
-- (void)notifyDidFinish {
+- (void)notifyDidFinish
+{
 	//notify the delegate.
-	if (fDelegate && [fDelegate respondsToSelector:@selector(URLDataReceiverDidFinish:)])
+	if (fDelegate && [fDelegate respondsToSelector:@selector(URLDataReceiverDidFinish:)]) {
 		[fDelegate performSelector:@selector(URLDataReceiverDidFinish:) withObject:self];
- }
+	}
+}
 
-
-- (void)setError:(NSError*)error {
-	if (fError) [fError release];
-	if (error) 
+- (void)setError:(NSError *)error
+{
+	if (fError) {
+		[fError release];
+	}
+	if (error) {
 		fError = [error retain];
-	else
+	}
+	else {
 		fError = nil;
+	}
 }
 
 @end

@@ -56,10 +56,10 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
  * This class control the loading of multiple URLs in an asynchronous fashion.
  */
 @interface URLLoader : NSObject {
-	NSMutableDictionary* fFinished; /**< Receivers that have finished.*/
-	NSMutableDictionary* fPending; /**< Receivers that have not started or currently are loading.*/
+	NSMutableDictionary *fFinished; /**< Receivers that have finished.*/
+	NSMutableDictionary *fPending; /**< Receivers that have not started or currently are loading.*/
 	id fDelegate;
-	NSRecursiveLock* fLock;
+	NSRecursiveLock *fLock;
 }
 
 /*!
@@ -70,7 +70,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 /*!
  * @abstract Start loading data.
  */
-- (void)load:(NSArray*)URLs;
+- (void)load:(NSArray *)URLs;
 
 /*!
  * @abstract Cancel loading.
@@ -90,37 +90,37 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
  * Once loading finished, data receiver is stored in fFinished and indexed by
  * corresponding URL.
  */
-- (NSData*)dataForURL:(NSURL*)aURL;
+- (NSData *)dataForURL:(NSURL *)aURL;
 
 /*!
  * @abstract Return [fFnished objectEnumerator]
  */
-- (NSEnumerator*)dataEnumerator;
+- (NSEnumerator *)dataEnumerator;
 
 /*!
  * @abstract Return [fFinished keyEnumerator];
  */
-- (NSEnumerator*)urlEnumerator;
+- (NSEnumerator *)urlEnumerator;
 
 @end
 
 /*!
  * @abstract URLLoaderDelegate protocol.
  */
-@interface NSObject(URLLoaderDelegate)
+@interface NSObject (URLLoaderDelegate)
 
 /*!
  * @abstract Notify delegate that aURL has started loading.
  */
-- (void)URLLoader:(URLLoader*)theURLLoader didBeginURL:(NSURL*)aURL;
+- (void)URLLoader:(URLLoader *)theURLLoader didBeginURL:(NSURL *)aURL;
 
 /*!
  * @abstract Notify delegate that aURL has finished loading.
  */
-- (void)URLLoader:(URLLoader*)theURLLoader didFinishURL:(NSURL*)aURL;
+- (void)URLLoader:(URLLoader *)theURLLoader didFinishURL:(NSURL *)aURL;
 
 /*!
  * @abstract Notify delegate that all URLs have finished loading.
  */
-- (void)URLLoaderDidFinishAll:(URLLoader*)theURLLoader;
+- (void)URLLoaderDidFinishAll:(URLLoader *)theURLLoader;
 @end
