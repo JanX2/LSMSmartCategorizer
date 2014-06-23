@@ -104,7 +104,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 
 - (id)initWithURL:(NSURL *)aURL andTitle:(NSString *)aTitle
 {
-	[super init];
+	self = [super init];
 	
 	if (self) {
 		fURL = [aURL copy];
@@ -113,16 +113,6 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	return self;
 }
 
-- (void)dealloc
-{
-	if (fURL) {
-		[fURL release];
-	}
-	if (fTitle) {
-		[fTitle release];
-	}
-	[super dealloc];
-}
 
 - (unsigned)numberOfChildren
 {
@@ -161,20 +151,12 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 		return nil;
 	}
 	
-	fFeed = [feed retain];
+	fFeed = feed;
 	fScore = nil;
 	
 	return self;
 }
 
-- (void)dealloc
-{
-	[fFeed release];
-	if (fScore) {
-		[fScore release];
-	}
-	[super dealloc];
-}
 
 - (unsigned)numberOfChildren
 {
@@ -240,10 +222,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 
 - (void)setScore:(NSNumber *)score
 {
-	if (fScore) {
-		[fScore release];
-	}
-	fScore = [score retain];
+	fScore = score;
 }
 
 - (PSFeed *)feed
@@ -276,16 +255,6 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	return self;
 }
 
-- (void)dealloc
-{
-	if (fTitle) {
-		[fTitle release];
-	}
-	if (fChildren) {
-		[fChildren release];
-	}
-	[super dealloc];
-}
 
 - (unsigned)numberOfChildren
 {

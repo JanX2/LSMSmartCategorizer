@@ -89,25 +89,12 @@ NSString* gNameToIdMap = @"NameToIdMap";
 
 - (void)dealloc
 {
-	//dispose everything
-	if (catIdToNameMap) {
-		[catIdToNameMap release];
-	}
-	if (catNameToIdMap) {
-		[catNameToIdMap release];
-	}
-	if (map) {
-		CFRelease(map);
-	}
-	
-	[super dealloc];
+	if (map != NULL)  CFRelease(map);
 }
 
 - (void)reset
 {
-	[catIdToNameMap release];
-	[catNameToIdMap release];
-	CFRelease(map);
+	if (map != NULL)  CFRelease(map);
 	
 	//create the LSM map with default allocator and option
 	map = LSMMapCreate(kCFAllocatorDefault, 0);
@@ -171,7 +158,7 @@ NSString* gNameToIdMap = @"NameToIdMap";
 	
 	//convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(NULL, map);
-	if (LSMTextAddWords(lsmText, (CFStringRef)text, CFLocaleGetSystem(), option) != noErr) {
+	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), option) != noErr) {
 		CFRelease(lsmText);
 		return kLSMCErr;
 	}
@@ -201,7 +188,7 @@ NSString* gNameToIdMap = @"NameToIdMap";
 {
 	//convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(NULL, map);
-	if (LSMTextAddWords(lsmText, (CFStringRef)text, CFLocaleGetSystem(), textOption) != noErr) {
+	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), textOption) != noErr) {
 		CFRelease(lsmText);
 		return nil;
 	}
@@ -235,33 +222,28 @@ NSString* gNameToIdMap = @"NameToIdMap";
 	//has to be NSString.
 	NSMutableDictionary *dict = [NSMutableDictionary new];
 	[dict setObject:catNameToIdMap forKey:gNameToIdMap];
-	LSMMapSetProperties(map, (CFDictionaryRef)dict);
-	[dict release];
+	LSMMapSetProperties(map, (__bridge CFDictionaryRef)dict);
 	
 	NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
-	OSStatus status = LSMMapWriteToURL(map, (CFURLRef)url, 0);
-	[url release];
+	OSStatus status = LSMMapWriteToURL(map, (__bridge CFURLRef)url, 0);
 	
 	return (status == noErr) ? noErr : kLSMCWriteError;
 }
 
 - (OSStatus)readFromFile:(NSString *)path with:(unsigned)mode
 {
-	CFRelease(map);
-	[catIdToNameMap release];
-	[catNameToIdMap release];
+	if (map != NULL)  CFRelease(map);
 	
 	BOOL ok = YES;
 	
 	NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
-	map = LSMMapCreateFromURL(NULL, (CFURLRef)url, kLSMMapLoadMutable);
-	[url release];
+	map = LSMMapCreateFromURL(NULL, (__bridge CFURLRef)url, kLSMMapLoadMutable);
 	
 	if (!map) {
 		ok = NO;
 	}
 	else {
-		NSDictionary *idNameMaps = (NSDictionary *)LSMMapGetProperties(map);
+		NSDictionary *idNameMaps = (__bridge NSDictionary *)LSMMapGetProperties(map);
 		if (idNameMaps) {
 			NSDictionary *dict = [idNameMaps objectForKey:gNameToIdMap];
 			if (dict) {
@@ -301,7 +283,6 @@ NSString* gNameToIdMap = @"NameToIdMap";
 	NSNumber *idNumber = [[NSNumber alloc] initWithUnsignedInt:index];
 	[catIdToNameMap setObject:name forKey:idNumber];
 	[catNameToIdMap setObject:idNumber forKey:name];
-	[idNumber release];
 }
 
 @end

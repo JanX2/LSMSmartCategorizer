@@ -82,22 +82,6 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[outlineView expandItem:topLevelDataInfo];
 }
 
-- (void)dealloc
-{
-	if (topLevelDataInfo) {
-		[topLevelDataInfo release];
-	}
-    
-	if (_tmpURLDataInfo) {
-		[_tmpURLDataInfo release];
-	}
-    
-	if (_urlLoader) {
-		[_urlLoader release];
-	}
-    
-	[super dealloc];
-}
 
 - (IBAction)doLoadLocalTrainingData:(id)sender
 {
@@ -193,9 +177,6 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 		}
 	}
     
-	//release the classifier.
-	[classifier release];
-    
 	[self setUIIdle];
 }
 
@@ -270,17 +251,11 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 			else {
 				FeedDataInfo *feedDataInfo = [[FeedDataInfo alloc] initWithFeed:feed];
 				[feedCatInfo addChild:feedDataInfo];
-				[feedDataInfo release];
-			}
-            
-			if (feed) {
-				[feed release];
 			}
 		}
         
 		//add the newly created category into topLevelDataInfo.
 		[topLevelDataInfo addChild:feedCatInfo];
-		[feedCatInfo release];
 	}
     
 	[self reloadOutlineView];
@@ -345,16 +320,13 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 			                            initWithURL:[NSURL fileURLWithPath:datumPath] andTitle:datumName];
 			[pendingURLs addObject:[NSURL fileURLWithPath:datumPath]];
 			[catDataInfo addChild:urlDataInfo];
-			[urlDataInfo release];
 		}
         
 		[_tmpURLDataInfo addChild:catDataInfo];
-		[catDataInfo release];
 	}
     
 	//start loading.
 	[_urlLoader load:pendingURLs];
-	[pendingURLs release];
 	[self setUICancellableBusy:@"Fetching data ... "];
 }
 
@@ -389,16 +361,13 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 			                            initWithURL:feedURL andTitle:@""];
 			[pendingURLs addObject:feedURL];
 			[catDataInfo addChild:urlDataInfo];
-			[urlDataInfo release];
 		}
         
 		[_tmpURLDataInfo addChild:catDataInfo];
-		[catDataInfo release];
 	}
     
 	//start loading.
 	[_urlLoader load:pendingURLs];
-	[pendingURLs release];
 	[self setUICancellableBusy:@"Fetching data ... "];
 }
 

@@ -92,22 +92,6 @@ enum {
 	[outlineView expandItem:topLevelDataInfo];
 }
 
-- (void)dealloc
-{
-	if (topLevelDataInfo) {
-		[topLevelDataInfo release];
-	}
-    
-	if (_urlLoader) {
-		[_urlLoader release];
-	}
-    
-	if (_classifier) {
-		[_classifier release];
-	}
-    
-	[super dealloc];
-}
 
 
 - (IBAction)doLoadMap:(id)sender
@@ -132,7 +116,6 @@ enum {
 			while (mapCatName = [mapCatEnum nextObject]) {
 				CategoryDataInfo *catInfo = [[CategoryDataInfo alloc] initWithTitle:mapCatName];
 				[topLevelDataInfo addChild:catInfo];
-				[catInfo release];
 			}
             
 			//update the outline view.
@@ -143,7 +126,6 @@ enum {
 			[self log:[NSString stringWithFormat:@"Failed to load map from %@\n", mapPath]];
 		}
 	}
-	[allowedTypes release];
 }
 
 - (IBAction)doAddFile:(id)sender
@@ -268,12 +250,8 @@ enum {
 					}
 				}
 			}
-			[feedInfo release];
 		}
         
-		if (feed) {
-			[feed release];
-		}
 	}
 	
 }

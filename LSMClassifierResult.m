@@ -80,24 +80,12 @@ NSString* gScoreKey = @"score";
 			[singleResult setObject:categoryName forKey:gCategoryKey];
 			[singleResult setObject:score forKey:gScoreKey];
 			
-			[categoryId release];
-			[score release];
-			
 			[results addObject:singleResult];
-			
-			[singleResult release];
 		}
 	}
 	return self;
 }
 
-- (void)dealloc
-{
-	if (results) {
-		CFRelease(results);
-	}
-	[super dealloc];
-}
 
 - (unsigned)getResultCount
 {

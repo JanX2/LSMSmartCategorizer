@@ -96,24 +96,6 @@ enum {
 		[self cancel];
 	}
 	[fLock unlock];
-    
-	if (fURL) {
-		[fURL release];
-	}
-	if (fReceived) {
-		[fReceived release];
-	}
-	if (fError) {
-		[fError release];
-	}
-	if (fLock) {
-		[fLock release];
-	}
-	if (fConnection) {
-		[fConnection release];
-	}
-    
-	[super dealloc];
 }
 	
 	
@@ -227,15 +209,7 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 
 - (void)setError:(NSError *)error
 {
-	if (fError) {
-		[fError release];
-	}
-	if (error) {
-		fError = [error retain];
-	}
-	else {
-		fError = nil;
-	}
+	fError = error;
 }
 
 @end

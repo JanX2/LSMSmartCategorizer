@@ -74,12 +74,9 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 
 - (void)dealloc {
 	[fLock lock];
-	[fPending release];
-	[fFinished release];
+	fPending = nil;
+	fFinished = nil;
 	[fLock unlock];
-	
-	[fLock release];
-	[super dealloc];
 }
 	
 - (void)load:(NSArray*)URLs {
@@ -97,7 +94,6 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 		//put the newly created receiver into pending list.
 		[fPending setObject:receiver forKey:[URLs objectAtIndex:i]];
 		[receiver startLoading];
-		[receiver release];
 		
 		//notify the delegate.
 		[self notifyDidBeginURL:[URLs objectAtIndex:i]];
