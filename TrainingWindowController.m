@@ -102,11 +102,12 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	[panel setCanChooseFiles:YES];
 	[panel setCanChooseDirectories:NO];
-	if ([panel runModalForDirectory:startupPath file:filename types:nil] == NSOKButton) {
-		NSString *plistPath = [panel filenames][0];
-        
+	//[panel setDirectoryURL:[NSURL fileURLWithPath:@"~"]];
+	
+	if ([panel runModal] == NSOKButton) {
+		NSURL *plistURL = [panel URLs][0];
 		//start loading from URLs specified by the plist.
-		[self readDataSpecifiedByPlist:plistPath];
+		[self readDataSpecifiedByPlistURL:plistURL];
 	}
 }
 
@@ -148,16 +149,20 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
 	[savePanel setTitle:@"Save LSM map"];
 	[savePanel setCanSelectHiddenExtension:NO];
-	[savePanel setRequiredFileType:@"lsm"];
-	if ([savePanel runModalForDirectory:@"~" file:@"map.lsm"] == NSFileHandlingPanelOKButton) {
-		NSString *filename = [savePanel filename];
-        
-		//train and save the map.
-		if ([classifier writeToURL:filename] == noErr) {
-			[self log:[NSString stringWithFormat:@"Saved map to %@\n", filename]];
+	[savePanel setAllowedFileTypes:@[@"lsm"]];
+	//[savePanel setDirectoryURL:[NSURL fileURLWithPath:@"~"]];
+	[savePanel setNameFieldStringValue:@"map.lsm"];
+	
+	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+		NSURL *fileURL = [savePanel URL];
+		NSString *filePath = [fileURL path];
+
+		// Train and save the map.
+		if ([classifier writeToURL:fileURL] == noErr) {
+			[self log:[NSString stringWithFormat:@"Saved map to %@\n", filePath]];
 		}
 		else {
-			[self log:[NSString stringWithFormat:@"Failed to save map to %@\n", filename]];
+			[self log:[NSString stringWithFormat:@"Failed to save map to %@\n", filePath]];
 		}
 	}
     
@@ -338,43 +343,37 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[self setUICancellableBusy:@"Fetching data ... "];
 }
 
-- (void)readDataSpecifiedByPlist:(NSString *)plistPath
+- (void)readDataSpecifiedByPlistURL:(NSURL *)plistURL
 {
 	[self setUIAllBusy:@"Fetching data ..."];
     
-	NSDictionary *catDict = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-	if (catDict == nil) {
-		[self log:[NSString stringWithFormat:@"Failed to load plist %@", plistPath]];
+	NSDictionary *categoryDict = [NSDictionary dictionaryWithContentsOfURL:plistURL];
+	if (categoryDict == nil) {
+		[self log:[NSString stringWithFormat:@"Failed to load plist %@", [plistURL path]]];
 		return;
 	}
     
 	[_tmpURLDataInfo removeAllChildren];
 	NSMutableArray *pendingURLs = [NSMutableArray new];
     
-	//top level of the plist contains all the categories.
-	NSEnumerator *catEnum = [catDict keyEnumerator];
-	NSString *catName;
-	while (catName = [catEnum nextObject]) {
-		[self log:[NSString stringWithFormat:@"found category \"%@\"", catName]];
-		CategoryDataInfo *catDataInfo = [[CategoryDataInfo alloc] initWithTitle:catName];
+	// The top level of the plist contains all the categories.
+	[categoryDict enumerateKeysAndObjectsUsingBlock:^(NSString *categoryName, NSArray *feedArray, BOOL *stop) {
+		[self log:[NSString stringWithFormat:@"Found category \"%@\"", categoryName]];
+		CategoryDataInfo *catDataInfo = [[CategoryDataInfo alloc] initWithTitle:categoryName];
         
-		NSArray *feedArray = catDict[catName];
-        
-		//each category contains a list of URLs.
-		NSEnumerator *feedEnum = [feedArray objectEnumerator];
-		NSString *feedURLStr;
-		while (feedURLStr = [feedEnum nextObject]) {
+		// Each category contains a list of URL strings.
+		for (NSString *feedURLStr in feedArray) {
 			NSURL *feedURL = [NSURL URLWithString:feedURLStr];
-			URLDataInfo *urlDataInfo = [[URLDataInfo alloc]
-			                            initWithURL:feedURL andTitle:@""];
+			URLDataInfo *urlDataInfo = [[URLDataInfo alloc] initWithURL:feedURL
+															   andTitle:@""];
 			[pendingURLs addObject:feedURL];
 			[catDataInfo addChild:urlDataInfo];
 		}
         
 		[_tmpURLDataInfo addChild:catDataInfo];
-	}
+	}];
     
-	//start loading.
+	// Start loading.
 	[_urlLoader load:pendingURLs];
 	[self setUICancellableBusy:@"Fetching data ... "];
 }

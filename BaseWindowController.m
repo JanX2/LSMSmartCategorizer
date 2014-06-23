@@ -82,21 +82,21 @@
 {
 	[self setBusy:YES];
 	[self setCancelEnabled:YES];
-	[trainStatusText setTitleWithMnemonic:statusText];
+	[trainStatusText setStringValue:statusText];
 }
 
 - (void)setUIAllBusy:(NSString *)statusText
 {
 	[self setBusy:YES];
 	[self setCancelEnabled:NO];
-	[trainStatusText setTitleWithMnemonic:statusText];
+	[trainStatusText setStringValue:statusText];
 }
 
 - (void)setUIIdle
 {
 	[self setBusy:NO];
 	[self setCancelEnabled:NO];
-	[trainStatusText setTitleWithMnemonic:@""];
+	[trainStatusText setStringValue:@""];
 }
 
 - (void)log:(NSString *)msg
