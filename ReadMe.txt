@@ -1,10 +1,10 @@
-NOTE: Some of the funcationalities requires an internet connection.
+NOTE: Some of the functionality requires an internet connection.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~
 1. What is this project?
 ~~~~~~~~~~~~~~~~~~~~~~~~
 LSMSmartCategorizer uses Latent Semantic Mapping (LSM) framework to 
-categorize news feeds. It instends to provide an example of basic usage 
+categorize news feeds. It intends to provide an example of basic usage 
 of LSM framework.
 
 
@@ -17,9 +17,9 @@ LSMClassifier.h/.m
 LSMClassifierResult.h/.m
 LSMClassifierResultPrivate.m. 
 
-LSM framework is a Carbon framework. Above five files implement two 
+LSM framework is a Carbon framework. The above five files implement two 
 Objective-C classes, which encapsulate all LSM functionalities required 
-by this application. And those five files are thoroughly commented. 
+by this application. These five files are thoroughly commented. 
 
 Besides those five files, you might also want to look at three routines:
 [TrainingWindowController doTrainAndSave]
@@ -27,35 +27,35 @@ Besides those five files, you might also want to look at three routines:
 [EvalWindowController processFeedData:fromURL:]
 Those three routines are users of LSMClassifier and LSMClassifierResult.
 
-The rest of the source code files are here for the purpose of making
-this application complete.
+The rest of the source code files are there for the purpose of making
+this a usable application.
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 3. How to use this application?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-3.1 Introducation
-------------------
+3.1 Introduction
+----------------
 Similar to most supervised machine learning technique, the usage of LSM
 consists of two parts, training and evaluation. During training stage, 
 you provide to the application some news feeds which have already been 
 categorized. The LSM framework will create a map based on the data you 
-provide. During evaluation stage, you can provide news feeds that the 
-application has not seen before. LSM framework will use the trained map
+provide. During the evaluation stage, you can provide news feeds that the 
+application has not seen before. The LSM framework will use the trained map
 to categorize those feeds for you. 
 
-In this application, you train new maps in Training window, and evaluate
-in Evaluation window. You can switch between the two windows using 
-"Window" menu.
+In this application, you train new maps in the Training window, and evaluate
+in the Evaluation window. You can switch between the two windows using the
+“Window” menu.
 
 NOTE: The main purpose of this sample application is to demonstrate the
-usage of LMS framework. It is not our best interest, in this application,
+usage of the LMS framework. It is not our intent, in this application,
 to optimize the classification accuracy.
 
 3.2 Training
 ------------
-In Training window, there are two ways you can provide training data,
+In the Training window, there are two ways you can provide training data,
 using a directory hierarchy that contains the news feed files, or using
 a property list file that contains URLs to the feeds.
 
@@ -76,24 +76,24 @@ your training data hierarchy look like:
 	+-- ...
 +-- ...
 
-You will provide path "/my/training/data/directory/" to the application
+You will provide the path "/my/training/data/directory/" to the application
 as the top level directory. Within that directory, each sub-directory
 represents a category which contains all the feeds that belong to that
 category.
 
-Once you loaded training data, you can press "Train and Save Map..." button
-to train the map and save it to you hard drive for later evaluation.
+Once you have loaded training data, you can press the “Train and Save Map…” button
+to train the map and save it to disk for later evaluation.
 
-3.3 Evalutaion
----------------
-Once you create a map in Training window, you may use it to categorize 
-other feeds in Evaluation window. First thing you need to do is to press
-"Load Map..." button to load a map. Once the map is loaded, you will all
-existing categories in the outline view. Now you may press "Categorize
-Feed File..." to read a feed on your filesystem, or press "Categorize Feed
-URL..." to read a feed from a URL. The application will put the feed into
+3.3 Evaluation
+--------------
+Once you create a map in the Training window, you may use it to categorize 
+other feeds in Evaluation window. The first thing you need to do is to press
+“Load Map…” button to load a map. Once the map is loaded, you will see all
+existing categories in the outline view. Now you may press “Categorize
+Feed File…” to read a feed from your filesystem, or press “Categorize Feed
+URL…” to read a feed from a URL. The application will put the feed into
 the category to which it thinks the feed belongs. You will see the result
 in the outline view. 
 
-If you press "Categorize Feed URL...", there are some pre-populated feed 
+If you click “Categorize Feed URL…”, you will get some pre-populated feed 
 URLs to choose from.
