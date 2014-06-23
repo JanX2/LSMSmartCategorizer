@@ -203,7 +203,7 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	return [[LSMClassifierResult alloc] initWithLSMResult:result withIdToNameMap:catIdToNameMap];
 }
 
-- (unsigned)numberOfCategories
+- (NSUInteger)numberOfCategories
 {
 	return [catNameToIdMap count];
 }

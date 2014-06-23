@@ -87,7 +87,7 @@ NSString* gScoreKey = @"score";
 }
 
 
-- (unsigned)getResultCount
+- (NSUInteger)getResultCount
 {
 	return [results count];
 }

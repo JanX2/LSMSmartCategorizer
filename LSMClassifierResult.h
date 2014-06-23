@@ -65,7 +65,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 /*!
  * @abstract Return total number of results.
  */
-- (unsigned)getResultCount;
+- (NSUInteger)getResultCount;
 
 /*!
  * @abstract Get the category name of result specified by index.

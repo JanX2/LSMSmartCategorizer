@@ -53,7 +53,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 /////////// DataInfo //////////////
 @implementation DataInfo
 
-- (unsigned)numberOfChildren
+- (NSUInteger)numberOfChildren
 {
 	return 0;
 }
@@ -115,7 +115,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 }
 
 
-- (unsigned)numberOfChildren
+- (NSUInteger)numberOfChildren
 {
 	return 0;
 }
@@ -159,7 +159,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 }
 
 
-- (unsigned)numberOfChildren
+- (NSUInteger)numberOfChildren
 {
 	return 0;
 }
@@ -188,7 +188,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 {
 	NSMutableString *finalString = [NSMutableString string];
 	
-	//cancatenate plain text from each entry.
+	// Concatenate plain text from each entry.
 	NSEnumerator *entryEnum = [fFeed entryEnumeratorSortedBy:nil];
 	PSEntry *entry;
 	while (entry = [entryEnum nextObject]) {
@@ -257,7 +257,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 }
 
 
-- (unsigned)numberOfChildren
+- (NSUInteger)numberOfChildren
 {
 	return [fChildren count];
 }
@@ -287,7 +287,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	return [fChildren objectEnumerator];
 }
 
-- (DataInfo *)childAt:(unsigned)index
+- (DataInfo *)childAt:(NSUInteger)index
 {
 	return fChildren[index];
 }

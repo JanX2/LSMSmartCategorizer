@@ -75,7 +75,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 @interface DataInfo : NSObject {
 }
 
-- (unsigned)numberOfChildren;
+- (NSUInteger)numberOfChildren;
 - (BOOL)isLeaf;
 - (NSString *)title;
 - (NSURL *)url;
@@ -126,7 +126,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 - (id)initWithTitle:(NSString *)aTitle;
 - (void)addChild:(DataInfo *)child;
 - (NSEnumerator *)childEnumerator;
-- (DataInfo *)childAt:(unsigned)index;
+- (DataInfo *)childAt:(NSUInteger)index;
 - (void)removeAllChildren;
 
 @end

@@ -160,7 +160,7 @@ typedef NS_ENUM(SInt32, LSMCMode) {
 /**!
  * @abstract Return number of categories in the map.
  */
-- (unsigned)numberOfCategories;
+- (NSUInteger)numberOfCategories;
 
 /**!
  * @abstract Return category enumerator.

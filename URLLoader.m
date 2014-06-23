@@ -89,7 +89,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	[fPending removeAllObjects];
 	[fFinished removeAllObjects];
 	
-	unsigned i = 0;
+	NSUInteger i = 0;
 	for (; i < [URLs count]; ++i) {
 		//create a URLDataReceiver instance for each URL.
 		URLDataReceiver *receiver = [[URLDataReceiver alloc] initWithURL:URLs[i]
