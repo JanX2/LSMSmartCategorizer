@@ -37,29 +37,29 @@
 		32CA4F630368D1EE00C91783 /* LSMSmartCategorizer_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMSmartCategorizer_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* LSMSmartCategorizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSMSmartCategorizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9003A7C10A69AAD500695990 /* EvalWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = EvalWindowController.h; sourceTree = "<group>"; };
-		9003A7C20A69AAD500695990 /* EvalWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = EvalWindowController.m; sourceTree = "<group>"; };
+		9003A7C10A69AAD500695990 /* EvalWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvalWindowController.h; sourceTree = "<group>"; };
+		9003A7C20A69AAD500695990 /* EvalWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvalWindowController.m; sourceTree = "<group>"; };
 		90B1BF9F0A6C97CC00CBA154 /* test_urls.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = test_urls.plist; path = Resources/test_urls.plist; sourceTree = "<group>"; };
 		90B1BFA00A6C97CC00CBA154 /* training_rss_categories.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = training_rss_categories.plist; path = Resources/training_rss_categories.plist; sourceTree = "<group>"; };
 		90B1CC570A694F490034CC12 /* URLDataReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLDataReceiver.h; sourceTree = "<group>"; };
 		90B1CC580A694F490034CC12 /* URLDataReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLDataReceiver.m; sourceTree = "<group>"; };
 		90B1CC970A695E630034CC12 /* URLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLLoader.h; sourceTree = "<group>"; };
 		90B1CC980A695E630034CC12 /* URLLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLLoader.m; sourceTree = "<group>"; };
-		90EFE3AE0A699A92000FD9C9 /* LSMClassifier.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = LSMClassifier.h; sourceTree = "<group>"; };
-		90EFE3AF0A699A92000FD9C9 /* LSMClassifier.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = LSMClassifier.m; sourceTree = "<group>"; };
-		90EFE3B00A699A92000FD9C9 /* LSMClassifierResult.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = LSMClassifierResult.h; sourceTree = "<group>"; };
-		90EFE3B10A699A92000FD9C9 /* LSMClassifierResult.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = LSMClassifierResult.m; sourceTree = "<group>"; };
-		90EFE3B20A699A92000FD9C9 /* LSMClassifierResultPrivate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = LSMClassifierResultPrivate.h; sourceTree = "<group>"; };
+		90EFE3AE0A699A92000FD9C9 /* LSMClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMClassifier.h; sourceTree = "<group>"; };
+		90EFE3AF0A699A92000FD9C9 /* LSMClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSMClassifier.m; sourceTree = "<group>"; };
+		90EFE3B00A699A92000FD9C9 /* LSMClassifierResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMClassifierResult.h; sourceTree = "<group>"; };
+		90EFE3B10A699A92000FD9C9 /* LSMClassifierResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSMClassifierResult.m; sourceTree = "<group>"; };
+		90EFE3B20A699A92000FD9C9 /* LSMClassifierResultPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMClassifierResultPrivate.h; sourceTree = "<group>"; };
 		90EFE3BB0A699AC2000FD9C9 /* LatentSemanticMapping.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LatentSemanticMapping.framework; path = /System/Library/Frameworks/LatentSemanticMapping.framework; sourceTree = "<absolute>"; };
-		CE0E18AF0A67189A00B569B0 /* TrainingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TrainingWindowController.h; sourceTree = "<group>"; };
+		CE0E18AF0A67189A00B569B0 /* TrainingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingWindowController.h; sourceTree = "<group>"; };
 		CE1453B20A7873AD005E0F6B /* BaseWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseWindowController.h; sourceTree = "<group>"; };
 		CE1453B30A7873AD005E0F6B /* BaseWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseWindowController.m; sourceTree = "<group>"; };
 		CE559D0E0A68443100DD60AA /* PubSub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PubSub.framework; path = /System/Library/Frameworks/PubSub.framework; sourceTree = "<absolute>"; };
 		CE90D0BA0A6EB6BC0079089D /* AppHelp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AppHelp.txt; path = Resources/AppHelp.txt; sourceTree = "<group>"; };
-		CE90D1740A6ED6CF0079089D /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		CE90D1740A6ED6CF0079089D /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		CE9C16F60A672AF800F59C63 /* DataInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataInfo.h; sourceTree = "<group>"; };
 		CE9C16F70A672AF800F59C63 /* DataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataInfo.m; sourceTree = "<group>"; };
-		CEEED4690A6E936E00AD6C2D /* TrainingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TrainingWindowController.m; sourceTree = "<group>"; };
+		CEEED4690A6E936E00AD6C2D /* TrainingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainingWindowController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

@@ -286,7 +286,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 		
 		//[fileManager fileExistsAtPath:catPath isDirectory:&isDir];
         
-		// Discard it, if itÕs not a directory.
+		// Discard it, if it’s not a directory.
 		if ([isDirectory boolValue] == NO) {
 			continue;
 		}
@@ -319,7 +319,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 
 			//[fileManager fileExistsAtPath:datumPath isDirectory:&isDir];
             
-			// Discard it, if itÕs a directory.
+			// Discard it, if it’s a directory.
 			if ([isDir boolValue] == YES) {
 				continue;
 			}

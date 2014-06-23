@@ -43,7 +43,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright ¬© 2007 Apple Inc., All Rights Reserved
+ Copyright © 2007 Apple Inc., All Rights Reserved
  
  */
 
