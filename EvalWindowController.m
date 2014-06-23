@@ -156,10 +156,10 @@ enum {
 {
 	//Open a sheet to ask the user to enter an URL that he/she wants to categorize.
 	//we pre-store some URLs in the bundle, read those URLs.
-	NSString *testFilePath =
-    [[NSBundle mainBundle] pathForResource:@"test_urls" ofType:@"plist"];
-	if (testFilePath) {
-		NSArray *testURLs = [NSArray arrayWithContentsOfFile:testFilePath];
+	NSURL *testFileURL =
+    [[NSBundle mainBundle] URLForResource:@"test_urls" withExtension:@"plist"];
+	if (testFileURL) {
+		NSArray *testURLs = [NSArray arrayWithContentsOfURL:testFileURL];
 		if (testURLs) {
 			[urlBox addItemsWithObjectValues:testURLs];
 		}

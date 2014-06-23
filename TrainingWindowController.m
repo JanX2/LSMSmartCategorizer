@@ -84,29 +84,31 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 - (IBAction)doLoadFeedPlist:(id)sender
 {
 	//default plist is the one shipped with the app bundle.
-	NSString *resourcesPath =
-    [[NSBundle mainBundle] pathForResource:@"training_rss_categories" ofType:@"plist"];
+	NSURL *resourcesURL =
+    [[NSBundle mainBundle] URLForResource:@"training_rss_categories" withExtension:@"plist"];
     
-	NSString *startupPath;
-	NSString *filename;
+	NSURL *startupURL;
+	//NSString *fileName;
     
-	if (resourcesPath) {
-		filename = [resourcesPath lastPathComponent];
-		startupPath = [resourcesPath stringByDeletingLastPathComponent];
+	if (resourcesURL) {
+		//fileName = [resourcesURL lastPathComponent];
+		startupURL = [resourcesURL URLByDeletingLastPathComponent];
 	}
 	else {
-		filename = nil;
-		startupPath = @"~";
+		//fileName = nil;
+		startupURL = [[[NSFileManager defaultManager] URLsForDirectory:NSUserDirectory
+															  inDomains:NSUserDomainMask] firstObject];
 	}
-    
+	
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	[panel setCanChooseFiles:YES];
 	[panel setCanChooseDirectories:NO];
-	//[panel setDirectoryURL:[NSURL fileURLWithPath:@"~"]];
+	[panel setDirectoryURL:startupURL];
+	// Couldn’t find a way to select a default file.
 	
 	if ([panel runModal] == NSOKButton) {
 		NSURL *plistURL = [panel URLs][0];
-		//start loading from URLs specified by the plist.
+		// Start loading from URLs specified by the plist.
 		[self readDataSpecifiedByPlistURL:plistURL];
 	}
 }
@@ -181,11 +183,12 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 - (IBAction)doShowHelp:(id)sender
 {
 	if (![helpTextView string] || ([[helpTextView string] length] <= 0)) {
-		NSString *helpTextPath =
-        [[NSBundle mainBundle] pathForResource:@"AppHelp" ofType:@"txt"];
+		NSURL *helpTextURL =
+        [[NSBundle mainBundle] URLForResource:@"AppHelp" withExtension:@"txt"];
         
-		NSString *helpText = [NSString stringWithContentsOfFile:helpTextPath
-                                                       encoding:NSMacOSRomanStringEncoding error:nil];
+		NSString *helpText = [NSString stringWithContentsOfURL:helpTextURL
+													  encoding:NSUTF8StringEncoding
+														 error:NULL];
         
 		[helpTextView insertText:helpText];
 		[helpTextView scrollRangeToVisible:NSMakeRange(0, 0)];
