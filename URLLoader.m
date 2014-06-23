@@ -52,44 +52,49 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 /*!
  * @abstract Private routines.
  */
-@interface URLLoader(Private)
-- (void)notifyDidBeginURL:(NSURL*)aURL;
-- (void)notifyDidFinishURL:(NSURL*)aURL;
+@interface URLLoader (Private)
+- (void)notifyDidBeginURL:(NSURL *)aURL;
+- (void)notifyDidFinishURL:(NSURL *)aURL;
 - (void)notifyDidFinishAll;
 @end
 
 @implementation URLLoader
 
-- (id)initWithDelegate:(id)delegate {
+- (id)initWithDelegate:(id)delegate
+{
 	self = [super init];
-	if (self == nil) return nil;
 	
-	fFinished = [NSMutableDictionary new];
-	fPending = [NSMutableDictionary new];
-	fLock = [NSRecursiveLock new];
+	if (self) {
+		fFinished = [NSMutableDictionary new];
+		fPending = [NSMutableDictionary new];
+		fLock = [NSRecursiveLock new];
+		
+		fDelegate = delegate;
+	}
 	
-	fDelegate = delegate;
 	return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
 	[fLock lock];
 	fPending = nil;
 	fFinished = nil;
 	[fLock unlock];
 }
-	
-- (void)load:(NSArray*)URLs {
+
+- (void)load:(NSArray *)URLs
+{
 	[fLock lock];
 	[fPending removeAllObjects];
 	[fFinished removeAllObjects];
 	
-	unsigned i=0;
-	for (; i<[URLs count]; ++i) {
+	unsigned i = 0;
+	for (; i < [URLs count]; ++i) {
 		//create a URLDataReceiver instance for each URL.
 		URLDataReceiver *receiver = [[URLDataReceiver alloc] initWithURL:URLs[i]
 																delegate:self];
-										
+		
 		//put the newly created receiver into pending list.
 		fPending[URLs[i]] = receiver;
 		[receiver startLoading];
@@ -100,40 +105,48 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	[fLock unlock];
 }
 
-- (void)cancel {
+- (void)cancel
+{
 	[fLock lock];
 	[fPending removeAllObjects];
 	[fFinished removeAllObjects];
 	[fLock unlock];
 }
 
-- (void)reset {
+- (void)reset
+{
 	[self cancel];
 }
 
-- (NSData*)dataForURL:(NSURL*)aURL {
+- (NSData *)dataForURL:(NSURL *)aURL
+{
 	[fLock lock];
 	URLDataReceiver *receiver = fFinished[aURL];
 	[fLock unlock];
 	
-	if (receiver == nil)
+	if (receiver == nil) {
 		return nil;
-	else
+	}
+	else {
 		return [receiver receivedData];
+	}
 }
 
-- (NSEnumerator*)dataEnumerator {
+- (NSEnumerator *)dataEnumerator
+{
 	return [fFinished objectEnumerator];
 }
 
-- (NSEnumerator*)urlEnumerator {
+- (NSEnumerator *)urlEnumerator
+{
 	return [fFinished keyEnumerator];
 }
 
 /////////////////// URLDataReceiverDelegate Protocol //////////////////
-- (void)URLDataReceiverDidFinish:(URLDataReceiver*)dataReceiver {
+- (void)URLDataReceiverDidFinish:(URLDataReceiver *)dataReceiver
+{
 	[fLock lock];
-	NSURL* url = [dataReceiver url];
+	NSURL *url = [dataReceiver url];
 	
 	//move receiver from pending list to finished list.
 	[fPending removeObjectForKey:url];
@@ -143,24 +156,32 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 	[self notifyDidFinishURL:url];
 	
 	//if pending list is empty, notify delegate that all URLs have finished.
-	if ([fPending count] == 0)
+	if ([fPending count] == 0) {
 		[self notifyDidFinishAll];
+	}
 	[fLock unlock];
 }
 
 ///////////////// Private /////////////////////////
-- (void)notifyDidBeginURL:(NSURL*)aURL {
-	if (fDelegate && [fDelegate respondsToSelector:@selector(URLLoader:didBeginURL:)])
+- (void)notifyDidBeginURL:(NSURL *)aURL
+{
+	if (fDelegate && [fDelegate respondsToSelector:@selector(URLLoader:didBeginURL:)]) {
 		[fDelegate performSelector:@selector(URLLoader:didBeginURL:) withObject:self withObject:aURL];
+	}
 }
 
-- (void)notifyDidFinishURL:(NSURL*)aURL {
-	if (fDelegate && [fDelegate respondsToSelector:@selector(URLLoader:didFinishURL:)])
+- (void)notifyDidFinishURL:(NSURL *)aURL
+{
+	if (fDelegate && [fDelegate respondsToSelector:@selector(URLLoader:didFinishURL:)]) {
 		[fDelegate performSelector:@selector(URLLoader:didFinishURL:) withObject:self withObject:aURL];
+	}
 }
 
-- (void)notifyDidFinishAll {
-	if (fDelegate && [fDelegate respondsToSelector:@selector(URLLoaderDidFinishAll:)])
+- (void)notifyDidFinishAll
+{
+	if (fDelegate && [fDelegate respondsToSelector:@selector(URLLoaderDidFinishAll:)]) {
 		[fDelegate performSelector:@selector(URLLoaderDidFinishAll:) withObject:self];
+	}
 }
+
 @end

@@ -53,27 +53,26 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 #import "LSMClassifier.h"
 #import "LSMClassifierResultPrivate.h"
 
-NSString* gIdToNameMap = @"IdToNameMap";
-NSString* gNameToIdMap = @"NameToIdMap";
+NSString *gIdToNameMap = @"IdToNameMap";
+NSString *gNameToIdMap = @"NameToIdMap";
 
 //private methods of LSMClassifier
-@interface LSMClassifier(Private)
+@interface LSMClassifier (Private)
 
 //
 // Update catIdToNameMap and catNameToIdMap to keep them in sync.
 //
-- (void)mapCategoryId:(LSMCategory)index toName:(NSString*)name;
+- (void)mapCategoryId:(LSMCategory)index toName:(NSString *)name;
 
 @end
 
 @implementation LSMClassifier
 
-- (id)init 
+- (id)init
 {
 	self = [super init];
 	
 	if (self) {
-		
 		//create the LSM map with default allocator and option
 		map = LSMMapCreate(kCFAllocatorDefault, 0);
 		
