@@ -64,7 +64,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  *  @constant kLSMCNotValidMode        The mode specified is not valid.
  *  @constant kLSMSetModeFailed        Failed to set mode.
  */
-enum {
+typedef NS_ENUM(OSStatus, LSMCError) {
 	kLSMCErr                = 1000,
 	kLSMCDuplicatedCategory = 1001,
 	kLSMCNoSuchCategory     = 1002,
@@ -79,7 +79,7 @@ enum {
  * @abstract Indicate the mode the classifier is currently in, traning mode or
  *           evaluation mode.
  */
-enum {
+typedef NS_ENUM(SInt32, LSMCMode) {
 	kLSMCTraining = 0,
 	kLSMCEvaluation
 };
@@ -95,7 +95,7 @@ enum {
 	 * store the current mode, and only switch when necessary. You can also explicitly
 	 * set the classifier into a particular mode.
 	 */
-	unsigned currentMode;
+	LSMCMode currentMode;
 	
 	/*!
 	 * @abstract Category Id to category name map.
@@ -110,9 +110,6 @@ enum {
 	NSMutableDictionary *catNameToIdMap;
 }
 
-- (id)init;
-- (void)dealloc;
-
 /*!
  * @abstract Removed all existing categories, and switch to training mode.
  */
@@ -121,7 +118,7 @@ enum {
 /*!
  * @abstract Set classifier mode.
  */
-- (OSStatus)setModeTo:(SInt32)mode;
+- (OSStatus)setModeTo:(LSMCMode)mode;
 
 /*!
  * @abstract Add new cateogry.
@@ -173,15 +170,16 @@ enum {
 - (NSEnumerator *)categoryEnumerator;
 
 /**!
- * @abstract Save the internal data to file, including LSM map and the category
+ * @abstract Save the internal data to URL, including LSM map and the category
  *           Id-name maps.
  */
-- (OSStatus)writeToFile:(NSString *)path;
+- (OSStatus)writeToURL:(NSURL *)url;
 
 /**!
- * @abstract Load from specified file, and switch to mode.
+ * @abstract Load from specified URL, and switch to mode.
  */
-- (OSStatus)readFromFile:(NSString *)path with:(unsigned)mode;
+- (OSStatus)readFromURL:(NSURL *)url
+			  usingMode:(LSMCMode)mode;
 
 @end
 

@@ -54,24 +54,6 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 #import <PubSub/PubSub.h>
 #import <LSMClassifier.h>
 
-/*!
- * @abstract Private routines.
- */
-@interface TrainingWindowController (Private)
-
-/*!
- * @abstract Recursively find all files in a directory and its sub directories.
- *           And add those file URLs to _tmpURLDataInfo and start loading.
- */
-- (void)readDataPathsAt:(NSString *)topDataPath;
-
-/*!
- * @abstract Read training data URL plist.
- *           And add those file URLs to _tmpURLDataInfo and start loading.
- */
-- (void)readDataSpecifiedByPlist:(NSString *)plistPath;
-@end
-
 @implementation TrainingWindowController
 
 - (void)awakeFromNib
@@ -88,12 +70,14 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	[panel setCanChooseFiles:NO];
 	[panel setCanChooseDirectories:YES];
-	if ([panel runModalForDirectory:@"~" file:nil types:nil] == NSOKButton) {
-		NSString *topDataPath = [panel filenames][0];
-		[self log:[NSString stringWithFormat:@"Loading data from %@\n", topDataPath]];
+	//[panel setDirectoryURL:[NSURL fileURLWithPath:@"~"]];
+	
+	if ([panel runModal] == NSOKButton) {
+		NSURL *topDataURL = [panel URLs][0];
+		[self log:[NSString stringWithFormat:@"Loading data from %@\n", [topDataURL path]]];
         
 		//start loading data from specified directory.
-		[self readDataPathsAt:topDataPath];
+		[self readDataURLsAtURL:topDataURL];
 	}
 }
 
@@ -136,7 +120,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	CategoryDataInfo *catInfo;
 	while (catInfo = [catEnum nextObject]) {
 		if ([catInfo numberOfChildren] == 0) {
-			[self log:[NSString stringWithFormat:@"ERROR: Category \"%@\" is empty. Training cancelled.\n"]];
+			[self log:[NSString stringWithFormat:@"ERROR: Category \"%@\" is empty. Training cancelled.\n", catInfo.title]];
 			return;
 		}
 	}
@@ -169,7 +153,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 		NSString *filename = [savePanel filename];
         
 		//train and save the map.
-		if ([classifier writeToFile:filename] == noErr) {
+		if ([classifier writeToURL:filename] == noErr) {
 			[self log:[NSString stringWithFormat:@"Saved map to %@\n", filename]];
 		}
 		else {
@@ -266,66 +250,90 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 }
 
 //////////////////// Private //////////////////////
-- (void)readDataPathsAt:(NSString *)topDataPath
+- (void)readDataURLsAtURL:(NSURL *)topDataURL
 {
 	[self setUIAllBusy:@"Fetching data ..."];
     
 	[_tmpURLDataInfo removeAllChildren];
 	NSMutableArray *pendingURLs = [NSMutableArray new];
     
+	NSError *error = nil;
+	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	BOOL isDir;
+	
+	NSArray *resourceKeys = @[NSURLIsDirectoryKey, NSURLNameKey];
     
-	//each sub folder of topDataPath is treated as a category.
-	NSArray *categories = [fileManager directoryContentsAtPath:topDataPath];
-	NSEnumerator *catEnumerator = [categories objectEnumerator];
-	NSString *catName;
-	while (catName = [catEnumerator nextObject]) {
-		//discard hidden file, i.e. file whose name starts with '.'.
-		if ([catName hasPrefix:@"."]) {
+	// Each sub-folder of topDataURL is treated as a category.
+	NSArray *categoryURLs = [fileManager contentsOfDirectoryAtURL:topDataURL
+									   includingPropertiesForKeys:resourceKeys
+														  options:(NSDirectoryEnumerationSkipsHiddenFiles)
+															error:&error];
+	if (categoryURLs == nil) {
+		NSLog(@"%@", error);
+		return;
+	}
+	
+	for (NSURL *categoryURL in categoryURLs) {
+		NSString *categoryName;
+		[categoryURL getResourceValue:&categoryName
+							   forKey:NSURLNameKey
+								error:NULL];
+		
+		NSNumber *isDirectory;
+		[categoryURL getResourceValue:&isDirectory
+							   forKey:NSURLIsDirectoryKey
+								error:NULL];
+		
+		//[fileManager fileExistsAtPath:catPath isDirectory:&isDir];
+        
+		// Discard it, if itÕs not a directory.
+		if ([isDirectory boolValue] == NO) {
 			continue;
 		}
         
-		NSString *catPath = [NSString stringWithFormat:@"%@/%@", topDataPath, catName];
+		[self log:[NSString stringWithFormat:@"Found category: %@\n", categoryName]];
         
-		[fileManager fileExistsAtPath:catPath isDirectory:&isDir];
+		CategoryDataInfo *catDataInfo = [[CategoryDataInfo alloc] initWithTitle:categoryName];
         
-		//discard it if its not a directory
-		if (!isDir) {
+		// Each file in this directory is a piece of training data that belongs to this category.
+		NSArray *dataURLs = [fileManager contentsOfDirectoryAtURL:categoryURL
+									   includingPropertiesForKeys:resourceKeys
+														  options:(NSDirectoryEnumerationSkipsHiddenFiles)
+															error:&error];
+		if (dataURLs == nil) {
+			NSLog(@"%@", error);
 			continue;
 		}
-        
-		[self log:[NSString stringWithFormat:@"Found category: %@\n", catName]];
-        
-		CategoryDataInfo *catDataInfo = [[CategoryDataInfo alloc] initWithTitle:catName];
-        
-		//each file is a piece of training data belongs to that category.
-		NSArray *data = [fileManager directoryContentsAtPath:catPath];
-		NSEnumerator *datumEnumerator = [data objectEnumerator];
-		NSString *datumName;
-		while (datumName = [datumEnumerator nextObject]) {
-			//discard hidden file, i.e. file whose name starts with '.'.
-			if ([datumName hasPrefix:@"."]) {
+		
+		for (NSURL *datumURL in dataURLs) {
+			NSString *datumName;
+			[datumURL getResourceValue:&datumName
+							   forKey:NSURLNameKey
+								error:NULL];
+			
+			NSNumber *isDir;
+			[categoryURL getResourceValue:&isDir
+								   forKey:NSURLIsDirectoryKey
+									error:NULL];
+			
+
+			//[fileManager fileExistsAtPath:datumPath isDirectory:&isDir];
+            
+			// Discard it, if itÕs a directory.
+			if ([isDir boolValue] == YES) {
 				continue;
 			}
-            
-			NSString *datumPath = [NSString stringWithFormat:@"%@/%@", catPath, datumName];
-			[fileManager fileExistsAtPath:datumPath isDirectory:&isDir];
-            
-			//discard it if it is a directory
-			if (isDir) {
-				continue;
-			}
-			URLDataInfo *urlDataInfo = [[URLDataInfo alloc]
-			                            initWithURL:[NSURL fileURLWithPath:datumPath] andTitle:datumName];
-			[pendingURLs addObject:[NSURL fileURLWithPath:datumPath]];
+			
+			URLDataInfo *urlDataInfo = [[URLDataInfo alloc] initWithURL:datumURL
+															   andTitle:datumName];
+			[pendingURLs addObject:datumURL];
 			[catDataInfo addChild:urlDataInfo];
 		}
         
 		[_tmpURLDataInfo addChild:catDataInfo];
 	}
     
-	//start loading.
+	// Start loading.
 	[_urlLoader load:pendingURLs];
 	[self setUICancellableBusy:@"Fetching data ... "];
 }

@@ -62,8 +62,6 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	NSMutableArray *results;
 }
 
-- (void)dealloc;
-
 /*!
  * @abstract Return total number of results.
  */

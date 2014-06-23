@@ -43,7 +43,7 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2007 Apple Inc., All Rights Reserved
+Copyright ¬© 2007 Apple Inc., All Rights Reserved
 
 */
 #import "EvalWindowController.h"
@@ -68,13 +68,6 @@ enum {
 - (void)processFeedData:(NSData *)data fromURL:(NSURL *)url;
 
 /*!
- * @abstract Recursively find all files in a directory and its sub directories.
- *           And add those file paths into array.
- */
-- (void)appendPathsAt:(NSString *)path toURLArray:(NSMutableArray *)array;
-
-
-/*!
  * @abstract Callback function used by [NSApp beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:],
  *           when open the sheet to ask users to enter a URL.
  */
@@ -96,18 +89,20 @@ enum {
 
 - (IBAction)doLoadMap:(id)sender
 {
-	NSOpenPanel *panel = [NSOpenPanel openPanel];
-	[panel setCanChooseFiles:YES];
-	[panel setCanChooseDirectories:NO];
-    
 	NSMutableArray *allowedTypes = [NSMutableArray new];
 	[allowedTypes addObject:@"lsm"];
-	if ([panel runModalForDirectory:@"~" file:nil types:allowedTypes] == NSOKButton) {
-		NSString *mapPath = [panel filenames][0];
+	
+	NSOpenPanel *panel = [NSOpenPanel openPanel];
+	[panel setCanChooseFiles:YES];
+	//[panel setDirectoryURL:[NSURL fileURLWithPath:@"~"]];
+	[panel setAllowedFileTypes:allowedTypes];
+	
+	if ([panel runModal] == NSOKButton) {
+		NSURL *mapURL = [panel URLs][0];
         
 		//read the map into classifier
-		if ([_classifier readFromFile:mapPath with:kLSMCEvaluation] == noErr) {
-			[self log:[NSString stringWithFormat:@"Loaded map from %@\n", mapPath]];
+		if ([_classifier readFromURL:mapURL usingMode:kLSMCEvaluation] == noErr) {
+			[self log:[NSString stringWithFormat:@"Loaded map from %@\n", [mapURL path]]];
 			[topLevelDataInfo removeAllChildren];
 			NSEnumerator *mapCatEnum = [_classifier categoryEnumerator];
 			NSString *mapCatName;
@@ -123,25 +118,30 @@ enum {
 			[self setBusy:NO];
 		}
 		else {
-			[self log:[NSString stringWithFormat:@"Failed to load map from %@\n", mapPath]];
+			[self log:[NSString stringWithFormat:@"Failed to load map from %@\n", [mapURL path]]];
 		}
 	}
 }
 
 - (IBAction)doAddFile:(id)sender
 {
+	NSMutableArray *allowedTypes = [NSMutableArray new];
+	[allowedTypes addObject:@"lsm"];
+	
 	//Ask the user to choose the file or files in a directory that he/she wants to categorize.
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	[panel setCanChooseFiles:YES];
 	[panel setCanChooseDirectories:YES];
 	[panel setAllowsMultipleSelection:YES];
-    
-	if ([panel runModalForDirectory:@"~" file:nil types:nil] == NSOKButton) {
-		NSArray *selected = [panel filenames];
+	//[panel setDirectoryURL:[NSURL fileURLWithPath:@"~"]];
+	[panel setAllowedFileTypes:allowedTypes];
+	
+	if ([panel runModal] == NSOKButton) {
+		NSArray *selected = [panel URLs];
 		NSMutableArray *pendingURLs = [NSMutableArray array];
-		unsigned i = 0;
-		for (; i < [selected count]; ++i) {
-			[self appendPathsAt:selected[i] toURLArray:pendingURLs];
+		for (NSURL *selectedURL in selected) {
+			[self appendDescendantURLsOf:selectedURL
+								 toArray:pendingURLs];
 		}
         
 		//Start loading the URLs. (Asynchronously)
@@ -256,34 +256,41 @@ enum {
 	
 }
 
-- (void)appendPathsAt:(NSString *)path toURLArray:(NSMutableArray *)array
+- (void)appendDescendantURLsOf:(NSURL *)url
+					   toArray:(NSMutableArray *)array;
 {
-	if ([path hasPrefix:@"."]) {
-		return;
-	}
-    
+	NSArray *resourceKeys = @[NSURLIsDirectoryKey];
+	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	BOOL isDir;
-    
-	if (![fileManager fileExistsAtPath:path isDirectory:&isDir]) {
-		return;
-	}
-    
-	if (isDir) {
-		//If it's a directory, recursively call this routine.
-		NSArray *contents = [fileManager directoryContentsAtPath:path];
-		NSEnumerator *contentEnum = [contents objectEnumerator];
-		NSString *contentName;
-		while (contentName = [contentEnum nextObject]) {
-			if ([contentName hasPrefix:@"."]) {
-				continue;
-			}
-			[self appendPathsAt:[NSString stringWithFormat:@"%@/%@", path, contentName] toURLArray:array];
+	NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:[url URLByResolvingSymlinksInPath]
+										  includingPropertiesForKeys:resourceKeys
+															 options:(NSDirectoryEnumerationSkipsPackageDescendants |
+																	  NSDirectoryEnumerationSkipsHiddenFiles)
+														errorHandler:^BOOL(NSURL *url, NSError *error) {
+															// FIXME: Improve?
+															return YES;
+														}];
+	
+	for (NSURL *currentURL in enumerator) {
+#if 0
+		NSDictionary *resourceDict = [currentURL resourceValuesForKeys:resourceKeys
+																 error:NULL];
+		if (resourceDict != nil) {
+			BOOL isDirectory = [(NSNumber *)resourceDict[NSURLIsDirectoryKey] boolValue];
+			
+			if (isDirectory == NO)  [array addObject:url];
 		}
-	}
-	else {
-		//If it's a file, append its path to array.
-		[array addObject:[NSURL fileURLWithPath:path]];
+#else
+		NSNumber *isDirectory;
+		[currentURL getResourceValue:&isDirectory
+						   forKey:NSURLIsDirectoryKey
+							error:NULL];
+		
+		if ([isDirectory boolValue] == NO) {
+			// If it’s a file, append its path to the array.
+			[array addObject:url];
+		}
+#endif
 	}
 }
 

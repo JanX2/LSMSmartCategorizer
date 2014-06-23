@@ -105,7 +105,7 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	catNameToIdMap = [NSMutableDictionary new];
 }
 
-- (OSStatus)setModeTo:(SInt32)mode
+- (OSStatus)setModeTo:(LSMCMode)mode
 {
 	if (currentMode != mode) {
 		switch (mode) {
@@ -163,7 +163,7 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	}
 	
 	//Store current mode so that we can restore the mode if we fail.
-	unsigned preMode = currentMode;
+	LSMCMode preMode = currentMode;
 	
 	[self setModeTo:kLSMCTraining];
 	LSMCategory category = [mapId unsignedIntValue];
@@ -213,7 +213,7 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	return [catNameToIdMap keyEnumerator];
 }
 
-- (OSStatus)writeToFile:(NSString *)path
+- (OSStatus)writeToURL:(NSURL *)url;
 {
 	//put catNameToIdMap into the map's property list so that
 	//we can store them to a file all together.
@@ -223,19 +223,18 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	dict[gNameToIdMap] = catNameToIdMap;
 	LSMMapSetProperties(map, (__bridge CFDictionaryRef)dict);
 	
-	NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
 	OSStatus status = LSMMapWriteToURL(map, (__bridge CFURLRef)url, 0);
 	
 	return (status == noErr) ? noErr : kLSMCWriteError;
 }
 
-- (OSStatus)readFromFile:(NSString *)path with:(unsigned)mode
+- (OSStatus)readFromURL:(NSURL *)url
+			  usingMode:(LSMCMode)mode;
 {
 	if (map != NULL)  CFRelease(map);
 	
 	BOOL ok = YES;
 	
-	NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
 	map = LSMMapCreateFromURL(NULL, (__bridge CFURLRef)url, kLSMMapLoadMutable);
 	
 	if (!map) {
