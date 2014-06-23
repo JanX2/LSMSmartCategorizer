@@ -39,8 +39,8 @@
 		8D1107320486CEB800E47090 /* LSMSmartCategorizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LSMSmartCategorizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9003A7C10A69AAD500695990 /* EvalWindowController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = EvalWindowController.h; sourceTree = "<group>"; };
 		9003A7C20A69AAD500695990 /* EvalWindowController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = EvalWindowController.m; sourceTree = "<group>"; };
-		90B1BF9F0A6C97CC00CBA154 /* test_urls.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = test_urls.plist; path = Resources/test_urls.plist; sourceTree = "<group>"; };
-		90B1BFA00A6C97CC00CBA154 /* training_rss_categories.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = training_rss_categories.plist; path = Resources/training_rss_categories.plist; sourceTree = "<group>"; };
+		90B1BF9F0A6C97CC00CBA154 /* test_urls.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = test_urls.plist; path = Resources/test_urls.plist; sourceTree = "<group>"; };
+		90B1BFA00A6C97CC00CBA154 /* training_rss_categories.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = training_rss_categories.plist; path = Resources/training_rss_categories.plist; sourceTree = "<group>"; };
 		90B1CC570A694F490034CC12 /* URLDataReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLDataReceiver.h; sourceTree = "<group>"; };
 		90B1CC580A694F490034CC12 /* URLDataReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLDataReceiver.m; sourceTree = "<group>"; };
 		90B1CC970A695E630034CC12 /* URLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLLoader.h; sourceTree = "<group>"; };
@@ -198,13 +198,18 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "LSMSmartCategorizer" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* LSMSmartCategorizer */;
 			projectDirPath = "";
 			projectRoot = "";
-			shouldCheckCompatibility = 1;
 			targets = (
 				8D1107260486CEB800E47090 /* LSMSmartCategorizer */,
 			);
