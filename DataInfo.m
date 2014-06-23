@@ -198,14 +198,14 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 		//not every entry has all the fields.
 		//so we need to check for nil.
 		PSContent *content;
-		if (content = [entry content]) {
+		if ((content = [entry content]) != nil) {
 			NSString *plainText = [content plainTextString];
 			if (plainText) {
 				[finalString appendString:plainText];
 			}
 		}
 		
-		if (content = [entry summary]) {
+		if ((content = [entry summary]) != nil) {
 			NSString *plainText = [content plainTextString];
 			if (plainText) {
 				[finalString appendString:plainText];
