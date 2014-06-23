@@ -110,6 +110,7 @@ Copyright ¬© 2007 Apple Inc., All Rights Reserved
 		fURL = [aURL copy];
 		fTitle = [aTitle copy];
 	}
+	
 	return self;
 }
 
