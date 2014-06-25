@@ -67,26 +67,26 @@ NSString *gNameToIdMap = @"NameToIdMap";
 @end
 
 @implementation LSMClassifier {
-	LSMMapRef map;
+	LSMMapRef _map;
 	
 	/*!
 	 * Switching between training and evaluation mode is expensive. We use this to
 	 * store the current mode, and only switch when necessary. You can also explicitly
 	 * set the classifier into a particular mode.
 	 */
-	LSMCMode currentMode;
+	LSMCMode _currentMode;
 	
 	/*!
 	 * @abstract Category Id to category name map.
 	 */
-	NSMutableDictionary *catIdToNameMap;
+	NSMutableDictionary *_catIdToNameMap;
 	
 	/*!
 	 * @abstract Category name to category Id map.
 	 *
 	 * So that user can refer to a particular category by a meaningful name.
 	 */
-	NSMutableDictionary *catNameToIdMap;
+	NSMutableDictionary *_catNameToIdMap;
 }
 
 - (id)init
@@ -102,30 +102,30 @@ NSString *gNameToIdMap = @"NameToIdMap";
 
 - (void)dealloc
 {
-	if (map != NULL)  CFRelease(map);
+	if (_map != NULL)  CFRelease(_map);
 }
 
 - (void)reset
 {
-	if (map != NULL)  CFRelease(map);
+	if (_map != NULL)  CFRelease(_map);
 	
 	//create the LSM map with default allocator and option
-	map = LSMMapCreate(kCFAllocatorDefault, 0);
+	_map = LSMMapCreate(kCFAllocatorDefault, 0);
 	
 	//set it to training mode, since the map is brandnew.
-	currentMode = kLSMCTraining;
+	_currentMode = kLSMCTraining;
 	
-	catIdToNameMap = [NSMutableDictionary new];
-	catNameToIdMap = [NSMutableDictionary new];
+	_catIdToNameMap = [NSMutableDictionary new];
+	_catNameToIdMap = [NSMutableDictionary new];
 }
 
 - (OSStatus)setModeTo:(LSMCMode)mode
 {
-	if (currentMode != mode) {
+	if (_currentMode != mode) {
 		switch (mode) {
 			case kLSMCTraining:
 				//set the map to training mode.
-				if (LSMMapStartTraining(map) != noErr) {
+				if (LSMMapStartTraining(_map) != noErr) {
 					return kLSMSetModeFailed;
 				}
 				else {
@@ -134,7 +134,7 @@ NSString *gNameToIdMap = @"NameToIdMap";
 				
 			case kLSMCEvaluation:
 				//compile the map and start evaluation mode
-				if (LSMMapCompile(map) != noErr) {
+				if (LSMMapCompile(_map) != noErr) {
 					return kLSMSetModeFailed;
 				}
 				else {
@@ -151,43 +151,43 @@ NSString *gNameToIdMap = @"NameToIdMap";
 
 - (OSStatus)addCategory:(NSString *)name
 {
-	NSNumber *mapId = catNameToIdMap[name];
+	NSNumber *mapId = _catNameToIdMap[name];
 	if (mapId) {
 		return kLSMCDuplicatedCategory;
 	}
 	
 	[self setModeTo:kLSMCTraining];
-	LSMCategory newCategory = LSMMapAddCategory(map);
+	LSMCategory newCategory = LSMMapAddCategory(_map);
 	[self mapCategoryId:newCategory toName:name];
 	return noErr;
 }
 
 - (OSStatus)addTrainingText:(NSString *)text toCategory:(NSString *)name with:(UInt32)option
 {
-	NSNumber *mapId = catNameToIdMap[name];
+	NSNumber *mapId = _catNameToIdMap[name];
 	if (!mapId) {
 		return kLSMCNoSuchCategory;
 	}
 	
 	//convert input text into LSMText text.
-	LSMTextRef lsmText = LSMTextCreate(NULL, map);
+	LSMTextRef lsmText = LSMTextCreate(NULL, _map);
 	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), option) != noErr) {
 		CFRelease(lsmText);
 		return kLSMCErr;
 	}
 	
 	//Store current mode so that we can restore the mode if we fail.
-	LSMCMode preMode = currentMode;
+	LSMCMode preMode = _currentMode;
 	
 	[self setModeTo:kLSMCTraining];
 	LSMCategory category = [mapId unsignedIntValue];
-	OSStatus result = LSMMapAddText(map, lsmText, category);
+	OSStatus result = LSMMapAddText(_map, lsmText, category);
 	CFRelease(lsmText);
 	
 	if (result != noErr) {
 		//something bad happened.
 		//let's recover to original mode and return error.
-		if (preMode != currentMode) {
+		if (preMode != _currentMode) {
 			[self setModeTo:preMode];
 		}
 		return kLSMCErr;
@@ -200,7 +200,7 @@ NSString *gNameToIdMap = @"NameToIdMap";
 - (LSMClassifierResult *)createResultFor:(NSString *)text upTo:(SInt32)numOfResults with:(UInt32)textOption
 {
 	//convert input text into LSMText text.
-	LSMTextRef lsmText = LSMTextCreate(NULL, map);
+	LSMTextRef lsmText = LSMTextCreate(NULL, _map);
 	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), textOption) != noErr) {
 		CFRelease(lsmText);
 		return nil;
@@ -208,23 +208,23 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	
 	//switch to evaluation mode
 	[self setModeTo:kLSMCEvaluation];
-	LSMResultRef result = LSMResultCreate(NULL, map, lsmText, numOfResults, 0);
+	LSMResultRef result = LSMResultCreate(NULL, _map, lsmText, numOfResults, 0);
 	CFRelease(lsmText);
 	if (!result) {
 		return nil;
 	}
 	
-	return [[LSMClassifierResult alloc] initWithLSMResult:result withIdToNameMap:catIdToNameMap];
+	return [[LSMClassifierResult alloc] initWithLSMResult:result withIdToNameMap:_catIdToNameMap];
 }
 
 - (NSUInteger)numberOfCategories
 {
-	return [catNameToIdMap count];
+	return [_catNameToIdMap count];
 }
 
 - (void)enumerateCategoryNamesUsingBlock:(void (^)(NSString *categoryName, BOOL *stop))block;
 {
-	for (NSString *categoryName in catNameToIdMap) {
+	for (NSString *categoryName in _catNameToIdMap) {
 		BOOL stop = NO;
 		
 		block(categoryName, &stop);
@@ -240,10 +240,10 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	//Note, if you plan to store NSDictionary object in the property list, the key
 	//has to be NSString.
 	NSMutableDictionary *dict = [NSMutableDictionary new];
-	dict[gNameToIdMap] = catNameToIdMap;
-	LSMMapSetProperties(map, (__bridge CFDictionaryRef)dict);
+	dict[gNameToIdMap] = _catNameToIdMap;
+	LSMMapSetProperties(_map, (__bridge CFDictionaryRef)dict);
 	
-	OSStatus status = LSMMapWriteToURL(map, (__bridge CFURLRef)url, 0);
+	OSStatus status = LSMMapWriteToURL(_map, (__bridge CFURLRef)url, 0);
 	
 	return (status == noErr) ? noErr : kLSMCWriteError;
 }
@@ -251,25 +251,25 @@ NSString *gNameToIdMap = @"NameToIdMap";
 - (OSStatus)readFromURL:(NSURL *)url
 			  usingMode:(LSMCMode)mode;
 {
-	if (map != NULL)  CFRelease(map);
+	if (_map != NULL)  CFRelease(_map);
 	
 	BOOL ok = YES;
 	
-	map = LSMMapCreateFromURL(NULL, (__bridge CFURLRef)url, kLSMMapLoadMutable);
+	_map = LSMMapCreateFromURL(NULL, (__bridge CFURLRef)url, kLSMMapLoadMutable);
 	
-	if (!map) {
+	if (!_map) {
 		ok = NO;
 	}
 	else {
-		NSDictionary *idNameMaps = (__bridge NSDictionary *)LSMMapGetProperties(map);
+		NSDictionary *idNameMaps = (__bridge NSDictionary *)LSMMapGetProperties(_map);
 		if (idNameMaps) {
 			NSDictionary *dict = idNameMaps[gNameToIdMap];
 			if (dict) {
-				catNameToIdMap = [[NSMutableDictionary alloc] initWithDictionary:dict];
-				catIdToNameMap = [NSMutableDictionary new];
+				_catNameToIdMap = [[NSMutableDictionary alloc] initWithDictionary:dict];
+				_catIdToNameMap = [NSMutableDictionary new];
 
-				for (NSString *key in catNameToIdMap) {
-					catIdToNameMap[catNameToIdMap[key]] = key;
+				for (NSString *key in _catNameToIdMap) {
+					_catIdToNameMap[_catNameToIdMap[key]] = key;
 				}
 			}
 			else {
@@ -295,8 +295,8 @@ NSString *gNameToIdMap = @"NameToIdMap";
 - (void)mapCategoryId:(LSMCategory)index toName:(NSString *)name
 {
 	NSNumber *idNumber = @(index);
-	catIdToNameMap[idNumber] = name;
-	catNameToIdMap[name] = idNumber;
+	_catIdToNameMap[idNumber] = name;
+	_catNameToIdMap[name] = idNumber;
 }
 
 @end

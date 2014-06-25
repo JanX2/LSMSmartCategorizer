@@ -55,14 +55,14 @@ NSString* gCategoryKey = @"category";
 NSString* gScoreKey = @"score";
 
 @implementation LSMClassifierResult {
-	NSMutableArray *results;
+	NSMutableArray *_results;
 }
 
 - (id)initWithLSMResult:(LSMResultRef)lsmResult withIdToNameMap:(NSDictionary*)map
 {
 	self = [super init];
 	if (self) {
-		results = [NSMutableArray new];
+		_results = [NSMutableArray new];
 		
 		//put individual result into the array
 		SInt32 count = LSMResultGetCount(lsmResult);
@@ -82,7 +82,7 @@ NSString* gScoreKey = @"score";
 			singleResult[gCategoryKey] = categoryName;
 			singleResult[gScoreKey] = score;
 			
-			[results addObject:singleResult];
+			[_results addObject:singleResult];
 		}
 	}
 	return self;
@@ -91,26 +91,26 @@ NSString* gScoreKey = @"score";
 
 - (NSUInteger)getResultCount
 {
-	return [results count];
+	return [_results count];
 }
 
 - (NSString *)getCategoryName:(UInt32)index
 {
-	if (index >= [results count]) {
+	if (index >= [_results count]) {
 		return nil;
 	}
 	else {
-		return results[index][gCategoryKey];
+		return _results[index][gCategoryKey];
 	}
 }
 
 - (NSNumber *)getScore:(UInt32)index
 {
-	if (index >= [results count]) {
+	if (index >= [_results count]) {
 		return nil;
 	}
 	else {
-		return results[index][gScoreKey];
+		return _results[index][gScoreKey];
 	}
 }
 
