@@ -104,14 +104,12 @@ enum {
 		if ([_classifier readFromURL:mapURL usingMode:kLSMCEvaluation] == noErr) {
 			[self log:[NSString stringWithFormat:@"Loaded map from %@\n", [mapURL path]]];
 			[topLevelDataInfo removeAllChildren];
-			NSEnumerator *mapCatEnum = [_classifier categoryEnumerator];
-			NSString *mapCatName;
-            
+			
 			//add available category names in the map into the outline view data source.
-			while (mapCatName = [mapCatEnum nextObject]) {
-				CategoryDataInfo *catInfo = [[CategoryDataInfo alloc] initWithTitle:mapCatName];
+			[_classifier enumerateCategoryNamesUsingBlock:^(NSString *categoryName, BOOL *stop) {
+				CategoryDataInfo *catInfo = [[CategoryDataInfo alloc] initWithTitle:categoryName];
 				[topLevelDataInfo addChild:catInfo];
-			}
+			}];
             
 			//update the outline view.
 			[self reloadOutlineView];

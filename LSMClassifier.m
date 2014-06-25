@@ -201,9 +201,15 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	return [catNameToIdMap count];
 }
 
-- (NSEnumerator *)categoryEnumerator
+- (void)enumerateCategoryNamesUsingBlock:(void (^)(NSString *categoryName, BOOL *stop))block;
 {
-	return [catNameToIdMap keyEnumerator];
+	for (NSString *categoryName in catNameToIdMap) {
+		BOOL stop = NO;
+		
+		block(categoryName, &stop);
+		
+		if (stop)  break;
+	}
 }
 
 - (OSStatus)writeToURL:(NSURL *)url;
@@ -240,9 +246,8 @@ NSString *gNameToIdMap = @"NameToIdMap";
 			if (dict) {
 				catNameToIdMap = [[NSMutableDictionary alloc] initWithDictionary:dict];
 				catIdToNameMap = [NSMutableDictionary new];
-				NSEnumerator *keys = [catNameToIdMap keyEnumerator];
-				NSString *key;
-				while (key = [keys nextObject]) {
+
+				for (NSString *key in catNameToIdMap) {
 					catIdToNameMap[catNameToIdMap[key]] = key;
 				}
 			}

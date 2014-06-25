@@ -163,11 +163,11 @@ typedef NS_ENUM(SInt32, LSMCMode) {
 - (NSUInteger)numberOfCategories;
 
 /**!
- * @abstract Return category enumerator.
+ * @abstract Enumerate category names.
  *
- * Use [NSEnumerator nextObject] to get the category name string.
+ * Call the block for each category name.
  */
-- (NSEnumerator *)categoryEnumerator;
+- (void)enumerateCategoryNamesUsingBlock:(void (^)(NSString *categoryName, BOOL *stop))block;
 
 /**!
  * @abstract Save the internal data to URL, including LSM map and the category
