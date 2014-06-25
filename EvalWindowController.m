@@ -281,8 +281,8 @@ enum {
 #else
 		NSNumber *isDirectory;
 		[currentURL getResourceValue:&isDirectory
-						   forKey:NSURLIsDirectoryKey
-							error:NULL];
+							  forKey:NSURLIsDirectoryKey
+							   error:NULL];
 		
 		if ([isDirectory boolValue] == NO) {
 			// If it’s a file, append its path to the array.
