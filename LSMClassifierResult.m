@@ -51,8 +51,8 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 
 #import "LSMClassifierResult.h"
 
-NSString* gCategoryKey = @"category";
-NSString* gScoreKey = @"score";
+NSString * const LSMCResultCategoryKey = @"category";
+NSString * const LSMCResultScoreKey = @"score";
 
 @implementation LSMClassifierResult {
 	NSMutableArray *_results;
@@ -79,8 +79,8 @@ NSString* gScoreKey = @"score";
 			//Get the score of the ith result.
 			NSNumber *score = @(LSMResultGetScore(lsmResult, i));
 			
-			singleResult[gCategoryKey] = categoryName;
-			singleResult[gScoreKey] = score;
+			singleResult[LSMCResultCategoryKey] = categoryName;
+			singleResult[LSMCResultScoreKey] = score;
 			
 			[_results addObject:singleResult];
 		}
@@ -100,7 +100,7 @@ NSString* gScoreKey = @"score";
 		return nil;
 	}
 	else {
-		return _results[index][gCategoryKey];
+		return _results[index][LSMCResultCategoryKey];
 	}
 }
 
@@ -110,7 +110,7 @@ NSString* gScoreKey = @"score";
 		return nil;
 	}
 	else {
-		return _results[index][gScoreKey];
+		return _results[index][LSMCResultScoreKey];
 	}
 }
 
