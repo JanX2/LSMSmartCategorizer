@@ -93,7 +93,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 - (NSData *)dataForURL:(NSURL *)aURL;
 
 /*!
- * @abstract Return [fFnished objectEnumerator]
+ * @abstract Return [fFinished objectEnumerator]
  */
 - (NSEnumerator *)dataEnumerator;
 
