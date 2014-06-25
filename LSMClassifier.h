@@ -87,28 +87,7 @@ typedef NS_ENUM(SInt32, LSMCMode) {
 /*!
  * @abstract Encapsulate some common routines of LSM framework.
  */
-@interface LSMClassifier : NSObject {
-	LSMMapRef map;
-	
-	/*!
-	 * Switching between training and evaluation mode is expensive. We use this to
-	 * store the current mode, and only switch when necessary. You can also explicitly
-	 * set the classifier into a particular mode.
-	 */
-	LSMCMode currentMode;
-	
-	/*!
-	 * @abstract Category Id to category name map.
-	 */
-	NSMutableDictionary *catIdToNameMap;
-	
-	/*!
-	 * @abstract Category name to category Id map.
-	 *
-	 * So that user can refer to a particular category by a meaningful name.
-	 */
-	NSMutableDictionary *catNameToIdMap;
-}
+@interface LSMClassifier : NSObject
 
 /*!
  * @abstract Removed all existing categories, and switch to training mode.

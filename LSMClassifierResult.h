@@ -58,9 +58,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  * Internally LSMClassfierResult is an array of all available results,
  * which are sorted by their scores.
  */
-@interface LSMClassifierResult : NSObject {
-	NSMutableArray *results;
-}
+@interface LSMClassifierResult : NSObject
 
 /*!
  * @abstract Return total number of results.

@@ -54,7 +54,9 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 NSString* gCategoryKey = @"category";
 NSString* gScoreKey = @"score";
 
-@implementation LSMClassifierResult
+@implementation LSMClassifierResult {
+	NSMutableArray *results;
+}
 
 - (id)initWithLSMResult:(LSMResultRef)lsmResult withIdToNameMap:(NSDictionary*)map
 {
