@@ -73,14 +73,7 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	self = [super init];
 	
 	if (self) {
-		//create the LSM map with default allocator and option
-		map = LSMMapCreate(kCFAllocatorDefault, 0);
-		
-		//set it to training mode, since the map is brandnew.
-		currentMode = kLSMCTraining;
-		
-		catIdToNameMap = [NSMutableDictionary new];
-		catNameToIdMap = [NSMutableDictionary new];
+		[self reset];
 	}
 	
 	return self;
@@ -267,10 +260,7 @@ NSString *gNameToIdMap = @"NameToIdMap";
 	}
 	else {
 		//oops, something wrong. Reset the classifier and bail.
-		map = LSMMapCreate(NULL, 0);
-		catIdToNameMap = [NSMutableDictionary new];
-		catNameToIdMap = [NSMutableDictionary new];
-		[self setModeTo:kLSMCTraining];
+		[self reset];
 		return kLSMCErr;
 	}
 }
