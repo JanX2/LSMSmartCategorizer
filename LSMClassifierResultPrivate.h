@@ -53,8 +53,8 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 
 #import "LSMClassifierResult.h"
 
-@interface LSMClassifierResult(Private)
-- (id)initWithLSMResult:(LSMResultRef)lsmResult withIdToNameMap:(NSDictionary*)map;
+@interface LSMClassifierResult (Private)
+- (id)initWithLSMResult:(LSMResultRef)lsmResult withIdToNameMap:(NSDictionary *)map;
 @end
 
 #endif //__LSMClassifierResultPrivate__
