@@ -63,14 +63,14 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 /*!
  * @abstract Return total number of results.
  */
-- (NSUInteger)getResultCount;
+- (NSUInteger)resultCount;
 
 /*!
  * @abstract Get the category name of result specified by index.
  *
  * return nil if the index is not valid.
  */
-- (NSString *)getCategoryName:(UInt32)index;
+- (NSString *)categoryName:(UInt32)index;
 
 /*!
  * @abstract Get the score of result specified by index.
@@ -79,7 +79,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  *
  * The underlying type of the score is float.
  */
-- (NSNumber *)getScore:(UInt32)index;
+- (NSNumber *)score:(UInt32)index;
 
 @end
 
