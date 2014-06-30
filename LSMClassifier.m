@@ -53,7 +53,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 #import "LSMClassifier.h"
 #import "LSMClassifierResultPrivate.h"
 
-NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
+NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
 //private methods of LSMClassifier
 @interface LSMClassifier (Private)
@@ -239,7 +239,7 @@ NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
 	//Note, if you plan to store NSDictionary object in the property list, the key
 	//has to be NSString.
 	NSMutableDictionary *dict = [NSMutableDictionary new];
-	dict[LSMCNameToIDMapKey] = _catNameToIdMap;
+	dict[LSMCategoryNameToIDMapKey] = _catNameToIdMap;
 	LSMMapSetProperties(_map, (__bridge CFDictionaryRef)dict);
 	
 	OSStatus status = LSMMapWriteToURL(_map, (__bridge CFURLRef)url, 0);
@@ -262,7 +262,7 @@ NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
 	else {
 		NSDictionary *idNameMaps = (__bridge NSDictionary *)LSMMapGetProperties(_map);
 		if (idNameMaps) {
-			NSDictionary *dict = idNameMaps[LSMCNameToIDMapKey];
+			NSDictionary *dict = idNameMaps[LSMCategoryNameToIDMapKey];
 			if (dict) {
 				_catNameToIdMap = [[NSMutableDictionary alloc] initWithDictionary:dict];
 				_catIdToNameMap = [NSMutableDictionary new];
