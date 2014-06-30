@@ -89,18 +89,17 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[fPending removeAllObjects];
 	[fFinished removeAllObjects];
 	
-	NSUInteger i = 0;
-	for (; i < URLs.count; ++i) {
+	for (NSURL *thisURL in URLs) {
 		// Create a URLDataReceiver instance for each URL.
-		URLDataReceiver *receiver = [[URLDataReceiver alloc] initWithURL:URLs[i]
+		URLDataReceiver *receiver = [[URLDataReceiver alloc] initWithURL:thisURL
 																delegate:self];
 		
 		// Put the newly created receiver into pending list.
-		fPending[URLs[i]] = receiver;
+		fPending[thisURL] = receiver;
 		[receiver startLoading];
 		
 		// Notify the delegate.
-		[self notifyDidBeginURL:URLs[i]];
+		[self notifyDidBeginURL:thisURL];
 	}
 	[fLock unlock];
 }
