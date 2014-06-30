@@ -234,10 +234,10 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
 - (OSStatus)writeToURL:(NSURL *)url;
 {
-	//put catNameToIdMap into the map's property list so that
-	//we can store them to a file all together.
-	//Note, if you plan to store NSDictionary object in the property list, the key
-	//has to be NSString.
+	// Put _catNameToIdMap into the map’s property list so that
+	// we can store it along with the map file.
+	// Note, if you plan to store NSDictionary objects in the property list, the keys
+	// have to be NSString objects.
 	NSMutableDictionary *dict = [NSMutableDictionary new];
 	dict[LSMCategoryNameToIDMapKey] = _catNameToIdMap;
 	LSMMapSetProperties(_map, (__bridge CFDictionaryRef)dict);
