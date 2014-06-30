@@ -70,7 +70,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  *
  * return nil if the index is not valid.
  */
-- (NSString *)categoryName:(UInt32)index;
+- (NSString *)categoryNameForIndex:(UInt32)index;
 
 /*!
  * @abstract Get the score of result specified by index.
@@ -79,7 +79,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  *
  * The underlying type of the score is float.
  */
-- (NSNumber *)score:(UInt32)index;
+- (NSNumber *)scoreForIndex:(UInt32)index;
 
 @end
 

@@ -235,10 +235,10 @@ enum {
 				[self log:[NSString stringWithFormat:@"Failed to categorize feed \"%@\"\n", [feedInfo title]]];
 			}
 			else {
-				NSString *catName = [results categoryName:0];
+				NSString *catName = [results categoryNameForIndex:0];
 				[self log:[NSString stringWithFormat:@"feed \"%@\" matches category \"%@\" with score %@\n",
-				           [feedInfo title], catName, [results score:0]]];
-				[feedInfo setScore:[results score:0]];
+				           [feedInfo title], catName, [results scoreForIndex:0]]];
+				[feedInfo setScore:[results scoreForIndex:0]];
                 
 				// Add the feed into the corresponding category in the outline view data source.
 				NSEnumerator *catEnum = [topLevelDataInfo childEnumerator];

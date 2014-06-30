@@ -97,7 +97,7 @@ NSString * const LSMCResultScoreKey = @"score";
 	return _results.count;
 }
 
-- (NSString *)categoryName:(UInt32)index
+- (NSString *)categoryNameForIndex:(UInt32)index
 {
 	if (index >= _results.count) {
 		return nil;
@@ -107,7 +107,7 @@ NSString * const LSMCResultScoreKey = @"score";
 	}
 }
 
-- (NSNumber *)score:(UInt32)index
+- (NSNumber *)scoreForIndex:(UInt32)index
 {
 	if (index >= _results.count) {
 		return nil;
