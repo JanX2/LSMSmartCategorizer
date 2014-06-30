@@ -217,7 +217,10 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 		return nil;
 	}
 	
-	return [[LSMClassifierResult alloc] initWithLSMResult:result withIdToNameMap:_catIdToNameMap];
+	LSMClassifierResult *classifierResult = [[LSMClassifierResult alloc] initWithLSMResult:result withIdToNameMap:_catIdToNameMap];
+	CFRelease(result);
+	
+	return classifierResult;
 }
 
 - (NSUInteger)numberOfCategories
