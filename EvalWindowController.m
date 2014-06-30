@@ -126,7 +126,7 @@ enum {
 	NSMutableArray *allowedTypes = [NSMutableArray new];
 	[allowedTypes addObject:@"lsm"];
 	
-	//Ask the user to choose the file or files in a directory that he/she wants to categorize.
+	// Ask the user to choose the file or files in a directory that he/she wants to categorize.
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	[panel setCanChooseFiles:YES];
 	[panel setCanChooseDirectories:YES];
@@ -142,7 +142,7 @@ enum {
 								 toArray:pendingURLs];
 		}
         
-		//Start loading the URLs. (Asynchronously)
+		// Start loading the URLs. (Asynchronously)
 		[_urlLoader load:pendingURLs];
         
 		// Set UI to busy.
@@ -205,7 +205,7 @@ enum {
     
 	NSArray *pendingURLs = @[[NSURL URLWithString:enteredStr]];
     
-	//Start loading the URL. (Asynchronously)
+	// Start loading the URL. (Asynchronously)
 	[_urlLoader load:pendingURLs];
     
 	// Set UI to busy.

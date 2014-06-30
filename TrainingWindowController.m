@@ -104,7 +104,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[panel setCanChooseFiles:YES];
 	[panel setCanChooseDirectories:NO];
 	[panel setDirectoryURL:startupURL];
-	// Couldn’t find a way to select a default file.
+	// FIXME: Couldn’t find a way to select a default file for an NSOpenPanel.
 	
 	if ([panel runModal] == NSOKButton) {
 		NSURL *plistURL = [panel URLs][0];
@@ -117,8 +117,8 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 {
 	[self setUIAllBusy:@"Training map ..."];
     
-	//Sanity check on each category.
-	//A category need to contain at least one feed in order to train
+	// Sanity check on each category.
+	// A category need to contain at least one feed in order to train
 	NSEnumerator *catEnum = [topLevelDataInfo childEnumerator];
 	CategoryDataInfo *catInfo;
 	while (catInfo = [catEnum nextObject]) {
