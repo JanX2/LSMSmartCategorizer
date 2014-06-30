@@ -1,9 +1,9 @@
 /*
 
-File: LSMClassifierResult.h
+File: LSMClassifierResults.m
 
 Abstract: LSMResultRef is one of the core datatype in LSM framework. 
-		  LSMClassifierResult is a wrapper of LSMResultRef.
+		  LSMClassifierResults is a wrapper of LSMResultRef.
 
 Version: 1.0
 
@@ -48,39 +48,73 @@ POSSIBILITY OF SUCH DAMAGE.
 Copyright © 2007 Apple Inc., All Rights Reserved
 
 */ 
-#ifndef __LSMClassifierResult__
-#define __LSMClassifierResult__
 
-#import <Foundation/Foundation.h>
-#import <LatentSemanticMapping/LatentSemanticMapping.h>
+#import "LSMClassifierResults.h"
 
-/*!
- * Internally LSMClassfierResult is an array of all available results,
- * which are sorted by their scores.
- */
-@interface LSMClassifierResult : NSObject
+NSString * const LSMCResultCategoryKey = @"category";
+NSString * const LSMCResultScoreKey = @"score";
 
-/*!
- * @abstract Return total number of results.
- */
-- (NSUInteger)resultCount;
+@implementation LSMClassifierResults {
+	NSMutableArray *_results;
+}
 
-/*!
- * @abstract Get the category name of result specified by index.
- *
- * return nil if the index is not valid.
- */
-- (NSString *)categoryName:(UInt32)index;
+- (id)initWithLSMResult:(LSMResultRef)lsmResult
+	   usingIdToNameMap:(NSDictionary *)map
+{
+	self = [super init];
+	
+	if (self) {
+		_results = [NSMutableArray new];
+		
+		// Put individual result into the array.
+		SInt32 count = LSMResultGetCount(lsmResult);
+		SInt32 i = 0;
+		for (; i < count; i++) {
+			NSMutableDictionary *singleResult = [NSMutableDictionary new];
+			
+			// Get the category id of the ith result.
+			NSNumber *categoryId = @(LSMResultGetCategory(lsmResult, i));
+			
+			// Map id to name.
+			NSString *categoryName = map[categoryId];
+			
+			// Get the score of the ith result.
+			NSNumber *score = @(LSMResultGetScore(lsmResult, i));
+			
+			singleResult[LSMCResultCategoryKey] = categoryName;
+			singleResult[LSMCResultScoreKey] = score;
+			
+			[_results addObject:singleResult];
+		}
+	}
+	
+	return self;
+}
 
-/*!
- * @abstract Get the score of result specified by index.
- *
- * return nil if the index is not valid.
- *
- * The underlying type of the score is float.
- */
-- (NSNumber *)score:(UInt32)index;
+
+- (NSUInteger)resultCount
+{
+	return _results.count;
+}
+
+- (NSString *)categoryName:(UInt32)index
+{
+	if (index >= _results.count) {
+		return nil;
+	}
+	else {
+		return _results[index][LSMCResultCategoryKey];
+	}
+}
+
+- (NSNumber *)score:(UInt32)index
+{
+	if (index >= _results.count) {
+		return nil;
+	}
+	else {
+		return _results[index][LSMCResultScoreKey];
+	}
+}
 
 @end
-
-#endif //__LSMClassifierResult__

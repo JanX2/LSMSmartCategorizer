@@ -228,17 +228,17 @@ enum {
 			FeedDataInfo *feedInfo = [[FeedDataInfo alloc] initWithFeed:feed];
             
 			// Get categorization result. Here we are only interested in the best matching category.
-			LSMClassifierResult *result = [_classifier getResultsForString:[feedInfo plainText]
-															maxResultCount:1
-																   options:0];
-			if (result == nil) {
+			LSMClassifierResults *results = [_classifier getResultsForString:[feedInfo plainText]
+															  maxResultCount:1
+																	 options:0];
+			if (results == nil) {
 				[self log:[NSString stringWithFormat:@"Failed to categorize feed \"%@\"\n", [feedInfo title]]];
 			}
 			else {
-				NSString *catName = [result categoryName:0];
+				NSString *catName = [results categoryName:0];
 				[self log:[NSString stringWithFormat:@"feed \"%@\" matches category \"%@\" with score %@\n",
-				           [feedInfo title], catName, [result score:0]]];
-				[feedInfo setScore:[result score:0]];
+				           [feedInfo title], catName, [results score:0]]];
+				[feedInfo setScore:[results score:0]];
                 
 				// Add the feed into the corresponding category in the outline view data source.
 				NSEnumerator *catEnum = [topLevelDataInfo childEnumerator];

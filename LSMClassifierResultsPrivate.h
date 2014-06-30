@@ -1,9 +1,9 @@
 /*
 
-File: LSMClassifierResultPrivate.h
+File: LSMClassifierResultsPrivate.h
 
 Abstract: LSMResultRef is one of the core datatype in LSM framework. 
-		  LSMClassifierResult is a wrapper of LSMResultRef.
+		  LSMClassifierResults is a wrapper of LSMResultRef.
 
 Version: 1.0
 
@@ -48,14 +48,14 @@ POSSIBILITY OF SUCH DAMAGE.
 Copyright © 2007 Apple Inc., All Rights Reserved
 
 */ 
-#ifndef __LSMClassifierResultPrivate__
-#define __LSMClassifierResultPrivate__
+#ifndef __LSMClassifierResultsPrivate__
+#define __LSMClassifierResultsPrivate__
 
-#import "LSMClassifierResult.h"
+#import "LSMClassifierResults.h"
 
-@interface LSMClassifierResult (Private)
+@interface LSMClassifierResults (Private)
 - (id)initWithLSMResult:(LSMResultRef)lsmResult
 	   usingIdToNameMap:(NSDictionary *)map;
 @end
 
-#endif //__LSMClassifierResultPrivate__
+#endif //__LSMClassifierResultsPrivate__

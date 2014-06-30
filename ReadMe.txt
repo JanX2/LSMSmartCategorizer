@@ -14,8 +14,8 @@ of LSM framework.
 There are nineteen source files in this project. You should focus on 
 five of them: 
 LSMClassifier.h/.m 
-LSMClassifierResult.h/.m
-LSMClassifierResultPrivate.m. 
+LSMClassifierResults.h/.m
+LSMClassifierResultsPrivate.m. 
 
 LSM framework is a Carbon framework. The above five files implement two 
 Objective-C classes, which encapsulate all LSM functionalities required 
@@ -25,7 +25,7 @@ Besides those five files, you might also want to look at three routines:
 [TrainingWindowController doTrainAndSave]
 [EvalWindowController doLoadMap:]
 [EvalWindowController processFeedData:fromURL:]
-Those three routines are users of LSMClassifier and LSMClassifierResult.
+Those three routines are users of LSMClassifier and LSMClassifierResults.
 
 The rest of the source code files are there for the purpose of making
 this a usable application.

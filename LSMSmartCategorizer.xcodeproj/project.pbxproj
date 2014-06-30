@@ -17,7 +17,7 @@
 		90B1CC590A694F490034CC12 /* URLDataReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B1CC580A694F490034CC12 /* URLDataReceiver.m */; };
 		90B1CC990A695E630034CC12 /* URLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B1CC980A695E630034CC12 /* URLLoader.m */; };
 		90EFE3B30A699A92000FD9C9 /* LSMClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EFE3AF0A699A92000FD9C9 /* LSMClassifier.m */; };
-		90EFE3B40A699A92000FD9C9 /* LSMClassifierResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EFE3B10A699A92000FD9C9 /* LSMClassifierResult.m */; };
+		90EFE3B40A699A92000FD9C9 /* LSMClassifierResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EFE3B10A699A92000FD9C9 /* LSMClassifierResults.m */; };
 		90EFE3BC0A699AC2000FD9C9 /* LatentSemanticMapping.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90EFE3BB0A699AC2000FD9C9 /* LatentSemanticMapping.framework */; };
 		CE1453B40A7873AD005E0F6B /* BaseWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1453B30A7873AD005E0F6B /* BaseWindowController.m */; };
 		CE559D1E0A68443100DD60AA /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE559D0E0A68443100DD60AA /* PubSub.framework */; };
@@ -47,9 +47,9 @@
 		90B1CC980A695E630034CC12 /* URLLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLLoader.m; sourceTree = "<group>"; };
 		90EFE3AE0A699A92000FD9C9 /* LSMClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMClassifier.h; sourceTree = "<group>"; };
 		90EFE3AF0A699A92000FD9C9 /* LSMClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSMClassifier.m; sourceTree = "<group>"; };
-		90EFE3B00A699A92000FD9C9 /* LSMClassifierResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMClassifierResult.h; sourceTree = "<group>"; };
-		90EFE3B10A699A92000FD9C9 /* LSMClassifierResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSMClassifierResult.m; sourceTree = "<group>"; };
-		90EFE3B20A699A92000FD9C9 /* LSMClassifierResultPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMClassifierResultPrivate.h; sourceTree = "<group>"; };
+		90EFE3B00A699A92000FD9C9 /* LSMClassifierResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMClassifierResults.h; sourceTree = "<group>"; };
+		90EFE3B10A699A92000FD9C9 /* LSMClassifierResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSMClassifierResults.m; sourceTree = "<group>"; };
+		90EFE3B20A699A92000FD9C9 /* LSMClassifierResultsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSMClassifierResultsPrivate.h; sourceTree = "<group>"; };
 		90EFE3BB0A699AC2000FD9C9 /* LatentSemanticMapping.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LatentSemanticMapping.framework; path = /System/Library/Frameworks/LatentSemanticMapping.framework; sourceTree = "<absolute>"; };
 		CE0E18AF0A67189A00B569B0 /* TrainingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingWindowController.h; sourceTree = "<group>"; };
 		CE1453B20A7873AD005E0F6B /* BaseWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseWindowController.h; sourceTree = "<group>"; };
@@ -81,9 +81,9 @@
 			children = (
 				90EFE3AE0A699A92000FD9C9 /* LSMClassifier.h */,
 				90EFE3AF0A699A92000FD9C9 /* LSMClassifier.m */,
-				90EFE3B00A699A92000FD9C9 /* LSMClassifierResult.h */,
-				90EFE3B10A699A92000FD9C9 /* LSMClassifierResult.m */,
-				90EFE3B20A699A92000FD9C9 /* LSMClassifierResultPrivate.h */,
+				90EFE3B00A699A92000FD9C9 /* LSMClassifierResults.h */,
+				90EFE3B10A699A92000FD9C9 /* LSMClassifierResults.m */,
+				90EFE3B20A699A92000FD9C9 /* LSMClassifierResultsPrivate.h */,
 				CE0E18AF0A67189A00B569B0 /* TrainingWindowController.h */,
 				CEEED4690A6E936E00AD6C2D /* TrainingWindowController.m */,
 				CE9C16F60A672AF800F59C63 /* DataInfo.h */,
@@ -242,7 +242,7 @@
 				90B1CC590A694F490034CC12 /* URLDataReceiver.m in Sources */,
 				90B1CC990A695E630034CC12 /* URLLoader.m in Sources */,
 				90EFE3B30A699A92000FD9C9 /* LSMClassifier.m in Sources */,
-				90EFE3B40A699A92000FD9C9 /* LSMClassifierResult.m in Sources */,
+				90EFE3B40A699A92000FD9C9 /* LSMClassifierResults.m in Sources */,
 				9003A7C30A69AAD500695990 /* EvalWindowController.m in Sources */,
 				CEEED46A0A6E936E00AD6C2D /* TrainingWindowController.m in Sources */,
 				CE1453B40A7873AD005E0F6B /* BaseWindowController.m in Sources */,

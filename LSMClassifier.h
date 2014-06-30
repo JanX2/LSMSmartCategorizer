@@ -52,7 +52,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 #ifndef __LSMClassifier__
 #define __LSMClassifier__
 
-#import "LSMClassifierResult.h"
+#import "LSMClassifierResults.h"
 
 /*! @enum Error  codes
  *  @discussion Errors returned by LSMClassifier methods.
@@ -136,9 +136,9 @@ typedef NS_ENUM(SInt32, LSMCMode) {
  *
  * If current mode is kLSMCTraining, this method will set mode to kLSMCEvaluation.
  */
-- (LSMClassifierResult *)getResultsForString:(NSString *)text
-							  maxResultCount:(SInt32)numOfResults
-									 options:(UInt32)textOption;
+- (LSMClassifierResults *)getResultsForString:(NSString *)text
+							   maxResultCount:(SInt32)numOfResults
+									  options:(UInt32)textOption;
 
 /**!
  * @abstract Return number of categories in the map.

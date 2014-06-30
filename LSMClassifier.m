@@ -51,7 +51,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 */ 
 
 #import "LSMClassifier.h"
-#import "LSMClassifierResultPrivate.h"
+#import "LSMClassifierResultsPrivate.h"
 
 NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
@@ -198,9 +198,9 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	}
 }
 
-- (LSMClassifierResult *)getResultsForString:(NSString *)text
-							  maxResultCount:(SInt32)numOfResults
-									 options:(UInt32)textOption
+- (LSMClassifierResults *)getResultsForString:(NSString *)text
+							   maxResultCount:(SInt32)numOfResults
+									  options:(UInt32)textOption
 {
 	// Convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
@@ -217,11 +217,11 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 		return nil;
 	}
 	
-	LSMClassifierResult *classifierResult = [[LSMClassifierResult alloc] initWithLSMResult:result
-																		  usingIdToNameMap:_catIdToNameMap];
+	LSMClassifierResults *classifierResults = [[LSMClassifierResults alloc] initWithLSMResult:result
+																			 usingIdToNameMap:_catIdToNameMap];
 	CFRelease(result);
 	
-	return classifierResult;
+	return classifierResults;
 }
 
 - (NSUInteger)numberOfCategories
