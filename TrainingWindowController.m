@@ -130,7 +130,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
     
 	//create a new classifer and set it to training mode.
 	LSMClassifier *classifier = [LSMClassifier new];
-	[classifier setModeTo:kLSMCTraining];
+	[classifier setMode:kLSMCTraining];
 	catEnum = [topLevelDataInfo childEnumerator];
     
 	//add each category in training data.

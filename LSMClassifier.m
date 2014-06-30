@@ -118,7 +118,7 @@ NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
 	_catNameToIdMap = [NSMutableDictionary new];
 }
 
-- (OSStatus)setModeTo:(LSMCMode)mode
+- (OSStatus)setMode:(LSMCMode)mode
 {
 	if (_currentMode != mode) {
 		switch (mode) {
@@ -155,7 +155,7 @@ NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
 		return kLSMCDuplicatedCategory;
 	}
 	
-	[self setModeTo:kLSMCTraining];
+	[self setMode:kLSMCTraining];
 	LSMCategory newCategory = LSMMapAddCategory(_map);
 	[self mapCategoryId:newCategory toName:name];
 	return noErr;
@@ -178,7 +178,7 @@ NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
 	//Store current mode so that we can restore the mode if we fail.
 	LSMCMode preMode = _currentMode;
 	
-	[self setModeTo:kLSMCTraining];
+	[self setMode:kLSMCTraining];
 	LSMCategory category = [mapId unsignedIntValue];
 	OSStatus result = LSMMapAddText(_map, lsmText, category);
 	CFRelease(lsmText);
@@ -187,7 +187,7 @@ NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
 		//something bad happened.
 		//let's recover to original mode and return error.
 		if (preMode != _currentMode) {
-			[self setModeTo:preMode];
+			[self setMode:preMode];
 		}
 		return kLSMCErr;
 	}
@@ -206,7 +206,7 @@ NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
 	}
 	
 	//switch to evaluation mode
-	[self setModeTo:kLSMCEvaluation];
+	[self setMode:kLSMCEvaluation];
 	LSMResultRef result = LSMResultCreate(NULL, _map, lsmText, numOfResults, 0);
 	CFRelease(lsmText);
 	if (!result) {
@@ -281,7 +281,7 @@ NSString * const LSMCNameToIDMapKey = @"NameToIdMap";
 	}
 	
 	if (ok) {
-		return [self setModeTo:mode];
+		return [self setMode:mode];
 	}
 	else {
 		//oops, something wrong. Reset the classifier and bail.

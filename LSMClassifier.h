@@ -97,7 +97,7 @@ typedef NS_ENUM(SInt32, LSMCMode) {
 /*!
  * @abstract Set classifier mode.
  */
-- (OSStatus)setModeTo:(LSMCMode)mode;
+- (OSStatus)setMode:(LSMCMode)mode;
 
 /*!
  * @abstract Add new cateogry.
