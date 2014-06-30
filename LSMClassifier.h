@@ -85,12 +85,12 @@ typedef NS_ENUM(SInt32, LSMCMode) {
 };
 
 /*!
- * @abstract Encapsulate some common routines of LSM framework.
+ * @abstract Encapsulate some common routines of the LSM framework.
  */
 @interface LSMClassifier : NSObject
 
 /*!
- * @abstract Removed all existing categories, and switch to training mode.
+ * @abstract Remove all existing categories, and switch to training mode.
  */
 - (void)reset;
 
