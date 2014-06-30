@@ -90,7 +90,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[fFinished removeAllObjects];
 	
 	NSUInteger i = 0;
-	for (; i < [URLs count]; ++i) {
+	for (; i < URLs.count; ++i) {
 		// Create a URLDataReceiver instance for each URL.
 		URLDataReceiver *receiver = [[URLDataReceiver alloc] initWithURL:URLs[i]
 																delegate:self];
@@ -156,7 +156,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[self notifyDidFinishURL:url];
 	
 	// If the pending list is empty, notify delegate that all URLs have been processed.
-	if ([fPending count] == 0) {
+	if (fPending.count == 0) {
 		[self notifyDidFinishAll];
 	}
 	[fLock unlock];

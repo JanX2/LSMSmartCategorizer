@@ -218,7 +218,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
 - (NSUInteger)numberOfCategories
 {
-	return [_catNameToIdMap count];
+	return _catNameToIdMap.count;
 }
 
 - (void)enumerateCategoryNamesUsingBlock:(void (^)(NSString *categoryName, BOOL *stop))block;

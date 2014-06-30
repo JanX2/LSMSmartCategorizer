@@ -259,7 +259,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 
 - (NSUInteger)numberOfChildren
 {
-	return [fChildren count];
+	return fChildren.count;
 }
 
 - (BOOL)isLeaf
