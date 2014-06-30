@@ -136,7 +136,9 @@ typedef NS_ENUM(SInt32, LSMCMode) {
  *
  * If current mode is kLSMCTraining, this method will set mode to kLSMCEvaluation.
  */
-- (LSMClassifierResult *)createResultFor:(NSString *)text upTo:(SInt32)numOfResults with:(UInt32)textOption;
+- (LSMClassifierResult *)createResultFor:(NSString *)text
+								maxCount:(SInt32)numOfResults
+								 options:(UInt32)textOption;
 
 /**!
  * @abstract Return number of categories in the map.

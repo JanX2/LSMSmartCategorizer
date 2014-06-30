@@ -228,7 +228,9 @@ enum {
 			FeedDataInfo *feedInfo = [[FeedDataInfo alloc] initWithFeed:feed];
             
 			// Get categorization result. Here we are only interested in the best matching category.
-			LSMClassifierResult *result = [_classifier createResultFor:[feedInfo plainText] upTo:1 with:0];
+			LSMClassifierResult *result = [_classifier createResultFor:[feedInfo plainText]
+															  maxCount:1
+															   options:0];
 			if (result == nil) {
 				[self log:[NSString stringWithFormat:@"Failed to categorize feed \"%@\"\n", [feedInfo title]]];
 			}
