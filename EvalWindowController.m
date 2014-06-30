@@ -235,20 +235,21 @@ enum {
 				[self log:[NSString stringWithFormat:@"Failed to categorize feed \"%@\"\n", [feedInfo title]]];
 			}
 			else {
-				NSString *catName = [results categoryNameForIndex:0];
-				[self log:[NSString stringWithFormat:@"feed \"%@\" matches category \"%@\" with score %@\n",
-				           [feedInfo title], catName, [results scoreForIndex:0]]];
-				[feedInfo setScore:[results scoreForIndex:0]];
-                
-				// Add the feed into the corresponding category in the outline view data source.
-				NSEnumerator *catEnum = [topLevelDataInfo childEnumerator];
-				CategoryDataInfo *catInfo;
-				while (catInfo = [catEnum nextObject]) {
-					if ([[catInfo title] isEqualToString:catName]) {
-						[catInfo addChild:feedInfo];
-						break;
+				[results enumerateResultsUsingBlock:^(NSString *categoryName, NSNumber *score, BOOL *stop) {
+					[self log:[NSString stringWithFormat:@"feed \"%@\" matches category \"%@\" with score %@\n",
+							   [feedInfo title], categoryName, [results scoreForIndex:0]]];
+					[feedInfo setScore:score];
+					
+					// Add the feed into the corresponding category in the outline view data source.
+					NSEnumerator *catEnum = [topLevelDataInfo childEnumerator];
+					CategoryDataInfo *catInfo;
+					while (catInfo = [catEnum nextObject]) {
+						if ([[catInfo title] isEqualToString:categoryName]) {
+							[catInfo addChild:feedInfo];
+							break;
+						}
 					}
-				}
+				}];
 			}
 		}
         

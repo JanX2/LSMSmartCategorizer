@@ -116,4 +116,18 @@ NSString * const LSMCResultScoreKey = @"score";
 	}
 }
 
+
+- (void)enumerateResultsUsingBlock:(void (^)(NSString *categoryName, NSNumber *score, BOOL *stop))block;
+{
+	for (NSDictionary *thisResult in _results) {
+		BOOL stop = NO;
+		
+		NSString *categoryName = thisResult[LSMCResultCategoryKey];
+		NSNumber *score = thisResult[LSMCResultScoreKey];
+		block(categoryName, score, &stop);
+		
+		if (stop)  break;
+	}
+}
+
 @end

@@ -81,6 +81,14 @@ Copyright © 2007 Apple Inc., All Rights Reserved
  */
 - (NSNumber *)scoreForIndex:(UInt32)index;
 
+
+/**!
+ * @abstract Enumerate results.
+ *
+ * Call the block for each results.
+ */
+- (void)enumerateResultsUsingBlock:(void (^)(NSString *categoryName, NSNumber *score, BOOL *stop))block;
+
 @end
 
 #endif //__LSMClassifierResults__
