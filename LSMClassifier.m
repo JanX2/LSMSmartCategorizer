@@ -198,9 +198,9 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	}
 }
 
-- (LSMClassifierResult *)createResultFor:(NSString *)text
-								maxCount:(SInt32)numOfResults
-								 options:(UInt32)textOption
+- (LSMClassifierResult *)getResultsForString:(NSString *)text
+							  maxResultCount:(SInt32)numOfResults
+									 options:(UInt32)textOption
 {
 	// Convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
