@@ -217,7 +217,8 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 		return nil;
 	}
 	
-	LSMClassifierResult *classifierResult = [[LSMClassifierResult alloc] initWithLSMResult:result withIdToNameMap:_catIdToNameMap];
+	LSMClassifierResult *classifierResult = [[LSMClassifierResult alloc] initWithLSMResult:result
+																		  usingIdToNameMap:_catIdToNameMap];
 	CFRelease(result);
 	
 	return classifierResult;

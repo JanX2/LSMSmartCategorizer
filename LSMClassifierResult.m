@@ -58,7 +58,8 @@ NSString * const LSMCResultScoreKey = @"score";
 	NSMutableArray *_results;
 }
 
-- (id)initWithLSMResult:(LSMResultRef)lsmResult withIdToNameMap:(NSDictionary*)map
+- (id)initWithLSMResult:(LSMResultRef)lsmResult
+	   usingIdToNameMap:(NSDictionary *)map
 {
 	self = [super init];
 	
