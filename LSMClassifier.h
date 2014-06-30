@@ -119,10 +119,12 @@ typedef NS_ENUM(SInt32, LSMCMode) {
  * If current mode is kLSMCEvaluation, on successful return, this method will set
  * mode to kLSMCTraining.
  *
- * option can be kLSMTextPreserveCase, kLSMTextPreserveAcronyms
+ * options can be kLSMTextPreserveCase, kLSMTextPreserveAcronyms
  * and/or kLSMTextApplySpamHeuristics.
  */
-- (OSStatus)addTrainingText:(NSString *)text toCategory:(NSString *)name with:(UInt32)option;
+- (OSStatus)addTrainingText:(NSString *)text
+				 toCategory:(NSString *)name
+				withOptions:(UInt32)options;
 
 /**!
  * @abstract Evaluate input text and return the results.
