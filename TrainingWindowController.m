@@ -76,14 +76,14 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 		NSURL *topDataURL = [panel URLs][0];
 		[self log:[NSString stringWithFormat:@"Loading data from %@\n", [topDataURL path]]];
         
-		//start loading data from specified directory.
+		// Start loading data from specified directory.
 		[self readDataURLsAtURL:topDataURL];
 	}
 }
 
 - (IBAction)doLoadFeedPlist:(id)sender
 {
-	//default plist is the one shipped with the app bundle.
+	// The default plist is the one shipped with the app bundle.
 	NSURL *resourcesURL =
     [[NSBundle mainBundle] URLForResource:@"training_rss_categories" withExtension:@"plist"];
     
@@ -128,26 +128,26 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 		}
 	}
     
-	//create a new classifer and set it to training mode.
+	// Create a new classifer and set it to training mode.
 	LSMClassifier *classifier = [LSMClassifier new];
 	[classifier setMode:kLSMCTraining];
 	catEnum = [topLevelDataInfo childEnumerator];
     
-	//add each category in training data.
+	// Add each category in the training data.
 	while (catInfo = [catEnum nextObject]) {
 		NSString *catName = [catInfo title];
 		[classifier addCategory:catName];
 		NSEnumerator *feedEnum = [catInfo childEnumerator];
 		FeedDataInfo *feedInfo;
         
-		//for each category, add each feed data.
+		// For each category, add each feed’s data.
 		while (feedInfo = [feedEnum nextObject]) {
 			NSString *feedString = [feedInfo plainText];
 			[classifier addTrainingText:feedString toCategory:catName with:0];
 		}
 	}
     
-	//save the map
+	// Save the map.
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
 	[savePanel setTitle:@"Save LSM map"];
 	[savePanel setCanSelectHiddenExtension:NO];
@@ -213,22 +213,22 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 	[self log:@"Finished loading from all URLs\n"];
 	[self setUIAllBusy:@"Parsing data ..."];
     
-	//reset outline view data source.
+	// Reset outline view data source.
 	[topLevelDataInfo removeAllChildren];
     
-	//we have done fetching all URI, now parse them.
+	// We have done fetching all URI, now parse them.
 	NSEnumerator *catEnum = [_tmpURLDataInfo childEnumerator];
 	CategoryDataInfo *category;
     
-	//move each category from _tmpURLDataInfo to topLevelDataInfo.
+	// Move each category from _tmpURLDataInfo to topLevelDataInfo.
 	while (category = [catEnum nextObject]) {
 		NSEnumerator *urlInfoEnum = [category childEnumerator];
 		URLDataInfo *urlInfo;
         
-		//create a new category
+		// Create a new category.
 		CategoryDataInfo *feedCatInfo = [[CategoryDataInfo alloc] initWithTitle:[category title]];
         
-		//for each category, use PSFeed to parse data from each feed URL.
+		// For each category, use PSFeed to parse data from each feed URL.
 		while (urlInfo = [urlInfoEnum nextObject]) {
 			NSData *data = [_urlLoader dataForURL:[urlInfo url]];
 			if (data == nil) {
@@ -246,7 +246,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 			}
 		}
         
-		//add the newly created category into topLevelDataInfo.
+		// Add the newly created category into topLevelDataInfo.
 		[topLevelDataInfo addChild:feedCatInfo];
 	}
     

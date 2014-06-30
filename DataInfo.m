@@ -195,8 +195,8 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 		NSString *theTitle = [entry title];
 		[finalString appendString:theTitle];
 		
-		//not every entry has all the fields.
-		//so we need to check for nil.
+		// Not every entry has all the fields set.
+		// So we need to check for nil.
 		PSContent *content;
 		if ((content = [entry content]) != nil) {
 			NSString *plainText = [content plainTextString];

@@ -90,7 +90,7 @@ enum {
 
 - (void)dealloc
 {
-	//cancel it if we are loading.
+	// Cancel it if we are loading.
 	[fLock lock];
 	if (fStatus == DRLoading) {
 		[self cancel];
@@ -115,7 +115,7 @@ enum {
 {
 	[fLock lock];
     
-	//return right away if we are not loading.
+	// Return right away if we are not loading.
 	if (fStatus != DRLoading) {
 		[fLock unlock];
 		return;
@@ -201,7 +201,7 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 
 - (void)notifyDidFinish
 {
-	//notify the delegate.
+	// Notify the delegate.
 	if (fDelegate && [fDelegate respondsToSelector:@selector(URLDataReceiverDidFinish:)]) {
 		[fDelegate performSelector:@selector(URLDataReceiverDidFinish:) withObject:self];
 	}

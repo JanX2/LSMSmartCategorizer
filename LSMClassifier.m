@@ -55,7 +55,7 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 
 NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
-//private methods of LSMClassifier
+// Private methods of LSMClassifier.
 @interface LSMClassifier (Private)
 
 //
@@ -108,10 +108,10 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 {
 	if (_map != NULL)  CFRelease(_map);
 	
-	//create the LSM map with default allocator and option
+	// Create the LSM map with the default allocator and option.
 	_map = LSMMapCreate(kCFAllocatorDefault, 0);
 	
-	//set it to training mode, since the map is brandnew.
+	// Set it to training mode, since the map is brandnew.
 	_currentMode = kLSMCTraining;
 	
 	_catIdToNameMap = [NSMutableDictionary new];
@@ -123,7 +123,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	if (_currentMode != mode) {
 		switch (mode) {
 			case kLSMCTraining:
-				//set the map to training mode.
+				// Set the map to training mode.
 				if (LSMMapStartTraining(_map) != noErr) {
 					return kLSMSetModeFailed;
 				}
@@ -132,7 +132,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 				}
 				
 			case kLSMCEvaluation:
-				//compile the map and start evaluation mode
+				// Compile the map and start evaluation mode.
 				if (LSMMapCompile(_map) != noErr) {
 					return kLSMSetModeFailed;
 				}
@@ -168,7 +168,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 		return kLSMCNoSuchCategory;
 	}
 	
-	//convert input text into LSMText text.
+	// Convert the input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
 	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), option) != noErr) {
 		CFRelease(lsmText);
@@ -184,8 +184,8 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	CFRelease(lsmText);
 	
 	if (result != noErr) {
-		//something bad happened.
-		//let's recover to original mode and return error.
+		// Something bad happened.
+		// Let’s recover to original mode and return error.
 		if (preMode != _currentMode) {
 			[self setMode:preMode];
 		}
@@ -198,14 +198,14 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
 - (LSMClassifierResult *)createResultFor:(NSString *)text upTo:(SInt32)numOfResults with:(UInt32)textOption
 {
-	//convert input text into LSMText text.
+	// Convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
 	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), textOption) != noErr) {
 		CFRelease(lsmText);
 		return nil;
 	}
 	
-	//switch to evaluation mode
+	// Switch to evaluation mode.
 	[self setMode:kLSMCEvaluation];
 	LSMResultRef result = LSMResultCreate(kCFAllocatorDefault, _map, lsmText, numOfResults, 0);
 	CFRelease(lsmText);
@@ -284,7 +284,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 		return [self setMode:mode];
 	}
 	else {
-		//oops, something wrong. Reset the classifier and bail.
+		// Oops, something wrong. Reset the classifier and bail.
 		[self reset];
 		return kLSMCErr;
 	}

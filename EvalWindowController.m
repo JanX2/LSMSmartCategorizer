@@ -100,18 +100,18 @@ enum {
 	if ([panel runModal] == NSOKButton) {
 		NSURL *mapURL = [panel URLs][0];
         
-		//read the map into classifier
+		// Read the map into classifier.
 		if ([_classifier readFromURL:mapURL usingMode:kLSMCEvaluation] == noErr) {
 			[self log:[NSString stringWithFormat:@"Loaded map from %@\n", [mapURL path]]];
 			[topLevelDataInfo removeAllChildren];
 			
-			//add available category names in the map into the outline view data source.
+			// Add available category names in the map into the outline view data source.
 			[_classifier enumerateCategoryNamesUsingBlock:^(NSString *categoryName, BOOL *stop) {
 				CategoryDataInfo *catInfo = [[CategoryDataInfo alloc] initWithTitle:categoryName];
 				[topLevelDataInfo addChild:catInfo];
 			}];
             
-			//update the outline view.
+			// Update the outline view.
 			[self reloadOutlineView];
 			[self setBusy:NO];
 		}
@@ -145,15 +145,15 @@ enum {
 		//Start loading the URLs. (Asynchronously)
 		[_urlLoader load:pendingURLs];
         
-		//set UI to busy.
+		// Set UI to busy.
 		[self setUICancellableBusy:@"Fetching data ..."];
 	}
 }
 
 - (void)doAddURL:(id)sender
 {
-	//Open a sheet to ask the user to enter an URL that he/she wants to categorize.
-	//we pre-store some URLs in the bundle, read those URLs.
+	// Open a sheet to ask the user to enter an URL that he/she wants to categorize.
+	// we pre-store some URLs in the bundle, read those URLs.
 	NSURL *testFileURL =
     [[NSBundle mainBundle] URLForResource:@"test_urls" withExtension:@"plist"];
 	if (testFileURL) {
@@ -190,15 +190,15 @@ enum {
 {
 	[sheet orderOut:self];
     
-	//return if user pressed "Cancel"
+	// Return if user pressed “Cancel”.
 	if (returnCode == kSheetReturnCancel) {
 		return;
 	}
     
 	NSMutableString *enteredStr = [NSMutableString stringWithString:[[urlBox stringValue] lowercaseString]];
     
-	//If the user use "feed:" as URL schema, replace it with "http:",
-	//because NSURLConnection doesn't support "feed:".
+	// If the user use “feed:” as the URL scheme, replace it with “http:”,
+	// because NSURLConnection doesn’t support “feed:”.
 	if ([enteredStr hasPrefix:@"feed:"]) {
 		[enteredStr replaceCharactersInRange:NSMakeRange(0, 5) withString:@"http:"];
 	}
@@ -208,7 +208,7 @@ enum {
 	//Start loading the URL. (Asynchronously)
 	[_urlLoader load:pendingURLs];
     
-	//set UI to busy.
+	// Set UI to busy.
 	[self setUICancellableBusy:@"Fetching data ..."];
 }
 
@@ -219,7 +219,7 @@ enum {
 		[self log:[NSString stringWithFormat:@"Failed to read %@\n", url]];
 	}
 	else {
-		//create a PSFeed instance.
+		// Create a PSFeed instance.
 		PSFeed *feed = [[PSFeed alloc] initWithData:data URL:url];
 		if ((feed == nil) || ([feed title] == nil)) {
 			[self log:[NSString stringWithFormat:@"Failed to parse data from %@\n", url]];
@@ -227,7 +227,7 @@ enum {
 		else {
 			FeedDataInfo *feedInfo = [[FeedDataInfo alloc] initWithFeed:feed];
             
-			//get categorization result. Here we are only interested in the best matching category.
+			// Get categorization result. Here we are only interested in the best matching category.
 			LSMClassifierResult *result = [_classifier createResultFor:[feedInfo plainText] upTo:1 with:0];
 			if (result == nil) {
 				[self log:[NSString stringWithFormat:@"Failed to categorize feed \"%@\"\n", [feedInfo title]]];
@@ -238,7 +238,7 @@ enum {
 				           [feedInfo title], catName, [result score:0]]];
 				[feedInfo setScore:[result score:0]];
                 
-				//add the feed into corresponding category in the outline view data source.
+				// Add the feed into the corresponding category in the outline view data source.
 				NSEnumerator *catEnum = [topLevelDataInfo childEnumerator];
 				CategoryDataInfo *catInfo;
 				while (catInfo = [catEnum nextObject]) {
@@ -308,11 +308,11 @@ enum {
 {
 	[self setUIAllBusy:@"Parsing data ..."];
     
-	//we have done fetching all URI, now parse them.
+	// We have done fetching all URI, now parse them.
 	NSEnumerator *urlEnum = [_urlLoader urlEnumerator];
 	NSURL *url;
     
-	//check if all URLs have been loaded successfully.
+	// Check if all URLs have been loaded successfully.
 	while (url = [urlEnum nextObject]) {
 		NSData *data = [_urlLoader dataForURL:url];
 		if (data == nil) {

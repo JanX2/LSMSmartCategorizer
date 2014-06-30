@@ -64,7 +64,7 @@ NSString * const LSMCResultScoreKey = @"score";
 	if (self) {
 		_results = [NSMutableArray new];
 		
-		//put individual result into the array
+		// Put individual result into the array.
 		SInt32 count = LSMResultGetCount(lsmResult);
 		SInt32 i = 0;
 		for (; i < count; i++) {
@@ -73,7 +73,7 @@ NSString * const LSMCResultScoreKey = @"score";
 			//Get the category id of the ith result.
 			NSNumber *categoryId = @(LSMResultGetCategory(lsmResult, i));
 			
-			//map id to name
+			// Map id to name.
 			NSString *categoryName = map[categoryId];
 			
 			//Get the score of the ith result.
