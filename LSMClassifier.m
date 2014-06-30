@@ -169,7 +169,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	}
 	
 	//convert input text into LSMText text.
-	LSMTextRef lsmText = LSMTextCreate(NULL, _map);
+	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
 	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), option) != noErr) {
 		CFRelease(lsmText);
 		return kLSMCErr;
@@ -199,7 +199,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 - (LSMClassifierResult *)createResultFor:(NSString *)text upTo:(SInt32)numOfResults with:(UInt32)textOption
 {
 	//convert input text into LSMText text.
-	LSMTextRef lsmText = LSMTextCreate(NULL, _map);
+	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
 	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), textOption) != noErr) {
 		CFRelease(lsmText);
 		return nil;
@@ -207,7 +207,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	
 	//switch to evaluation mode
 	[self setMode:kLSMCEvaluation];
-	LSMResultRef result = LSMResultCreate(NULL, _map, lsmText, numOfResults, 0);
+	LSMResultRef result = LSMResultCreate(kCFAllocatorDefault, _map, lsmText, numOfResults, 0);
 	CFRelease(lsmText);
 	if (!result) {
 		return nil;
@@ -254,7 +254,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	
 	BOOL ok = YES;
 	
-	_map = LSMMapCreateFromURL(NULL, (__bridge CFURLRef)url, kLSMMapLoadMutable);
+	_map = LSMMapCreateFromURL(kCFAllocatorDefault, (__bridge CFURLRef)url, kLSMMapLoadMutable);
 	
 	if (!_map) {
 		ok = NO;
