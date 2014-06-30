@@ -177,7 +177,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 		return kLSMCErr;
 	}
 	
-	//Store current mode so that we can restore the mode if we fail.
+	// Store current mode so that we can restore the mode if we fail.
 	LSMCMode preMode = _currentMode;
 	
 	[self setMode:kLSMCTraining];
@@ -187,7 +187,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	
 	if (result != noErr) {
 		// Something bad happened.
-		// Let’s recover to original mode and return error.
+		// Let’s recover by switching back to the original mode and returning an error.
 		if (preMode != _currentMode) {
 			[self setMode:preMode];
 		}

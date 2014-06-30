@@ -71,13 +71,13 @@ NSString * const LSMCResultScoreKey = @"score";
 		for (; i < count; i++) {
 			NSMutableDictionary *singleResult = [NSMutableDictionary new];
 			
-			//Get the category id of the ith result.
+			// Get the category id of the ith result.
 			NSNumber *categoryId = @(LSMResultGetCategory(lsmResult, i));
 			
 			// Map id to name.
 			NSString *categoryName = map[categoryId];
 			
-			//Get the score of the ith result.
+			// Get the score of the ith result.
 			NSNumber *score = @(LSMResultGetScore(lsmResult, i));
 			
 			singleResult[LSMCResultCategoryKey] = categoryName;
