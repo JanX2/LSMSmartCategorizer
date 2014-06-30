@@ -143,7 +143,9 @@ Copyright © 2007 Apple Inc., All Rights Reserved
 		// For each category, add each feed’s data.
 		while (feedInfo = [feedEnum nextObject]) {
 			NSString *feedString = [feedInfo plainText];
-			[classifier addTrainingText:feedString toCategory:catName withOptions:0];
+			[classifier addTrainingString:feedString
+							   toCategory:catName
+							  withOptions:0];
 		}
 	}
     

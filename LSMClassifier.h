@@ -122,9 +122,9 @@ typedef NS_ENUM(SInt32, LSMCMode) {
  * options can be kLSMTextPreserveCase, kLSMTextPreserveAcronyms
  * and/or kLSMTextApplySpamHeuristics.
  */
-- (OSStatus)addTrainingText:(NSString *)text
-				 toCategory:(NSString *)name
-				withOptions:(UInt32)options;
+- (OSStatus)addTrainingString:(NSString *)text
+				   toCategory:(NSString *)name
+				  withOptions:(UInt32)options;
 
 /**!
  * @abstract Evaluate input text and return the results.

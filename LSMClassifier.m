@@ -161,9 +161,9 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	return noErr;
 }
 
-- (OSStatus)addTrainingText:(NSString *)text
-				 toCategory:(NSString *)name
-				withOptions:(UInt32)options
+- (OSStatus)addTrainingString:(NSString *)text
+				   toCategory:(NSString *)name
+				  withOptions:(UInt32)options
 {
 	NSNumber *mapId = _catNameToIdMap[name];
 	if (!mapId) {
