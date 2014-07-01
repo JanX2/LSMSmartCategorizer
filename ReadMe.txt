@@ -7,33 +7,41 @@ LSMSmartCategorizer uses Latent Semantic Mapping (LSM) framework to
 categorize news feeds. It intends to provide an example of basic usage 
 of LSM framework.
 
+Sadly, the PubSub framework that is used herein has been deprecated as of 10.9. 
+You are very much welcome to write a better sample app using another way to 
+aquire RSS feeds or even using another type of data entirely. 
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 2. How should I study the source code?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To configure this project, you should first run
+
+	git submodule update --init --recursive
+
 There are nineteen source files in this project. You should focus on 
-five of them: 
+five of them, which are contained in an external submodule:
 LSMClassifier.h/.m 
 LSMClassifierResults.h/.m
 LSMClassifierResultsPrivate.m. 
 
-LSM framework is a Carbon framework. The above five files implement two 
+LSM framework is a Carbon framework. The five files listed above implement two
 Objective-C classes, which encapsulate all LSM functionalities required 
 by this application. These five files are thoroughly commented. 
 
-Besides those five files, you might also want to look at three routines:
+Beside those five files, you might also want to look at these three methods:
 [TrainingWindowController doTrainAndSave]
 [EvalWindowController doLoadMap:]
 [EvalWindowController processFeedData:fromURL:]
-Those three routines are users of LSMClassifier and LSMClassifierResults.
+Those three methods are users of LSMClassifier and LSMClassifierResults.
 
 The rest of the source code files are there for the purpose of making
 this a usable application.
 
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-3. How to use this application?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3. How is this application used?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 3.1 Introduction
 ----------------
