@@ -194,10 +194,10 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	// Switch to evaluation mode.
 	[self setMode:kLSMCEvaluation];
 	LSMResultRef result = LSMResultCreate(kCFAllocatorDefault, _map, lsmText, numOfResults, 0);
+	
 	CFRelease(lsmText);
-	if (!result) {
-		return nil;
-	}
+	
+	if (result == nil)  return nil;
 	
 	LSMClassifierResults *classifierResults = [[LSMClassifierResults alloc] initWithLSMResult:result
 																			 usingIdToNameMap:_catIdToNameMap];
