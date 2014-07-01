@@ -35,7 +35,7 @@ Copyright © 2014 Jan Weiß, geheimwerk.de
  *  @constant kLSMCDuplicatedCategory  The category to add is already in the map.
  *  @constant kLSMCNoSuchCategory      Invalid category specified.
  *  @constant kLSMCWriteError          An error occurred writing the map
- *  @constant kLSMCBadPath             The URL specified doesn't not exist.
+ *  @constant kLSMCBadPath             The URL specified doesn’t not exist.
  *  @constant kLSMCNotValidMode        The mode specified is not valid.
  *  @constant kLSMSetModeFailed        Failed to set mode.
  */
@@ -80,8 +80,8 @@ typedef NS_ENUM(CFIndex, LSMCMode) {
  * @return noErr The category was successfully added into the map.
  * @return kLSMCDuplicatedCategory The category name has already existed.
  *
- * If current mode is kLSMCEvaluation, on successful return, this method will set
- * mode to kLSMCTraining.
+ * If the current mode is kLSMCEvaluation, on successful return, this method will have set
+ * the mode to kLSMCTraining.
  */
 - (OSStatus)addCategory:(NSString *)name;
 
@@ -110,13 +110,13 @@ typedef NS_ENUM(CFIndex, LSMCMode) {
 		intoLSMText:(LSMTextRef)lsmText;
 
 /*!
- * @abstract Add training text to category specified by name.
+ * @abstract Add training text to the category specified by name.
  * @return noErr On success.
- * @return kLSMCNoSuchCategory Specified category doesn't exisit.
+ * @return kLSMCNoSuchCategory Specified category doesn’t exist.
  * @return kLSMCErr Other errors.
  *
- * If current mode is kLSMCEvaluation, on successful return, this method will set
- * mode to kLSMCTraining.
+ * If the current mode is kLSMCEvaluation, on successful return, this method will have set
+ * the mode to kLSMCTraining.
  *
  * options can be kLSMTextPreserveCase, kLSMTextPreserveAcronyms
  * and/or kLSMTextApplySpamHeuristics.
@@ -131,8 +131,8 @@ typedef NS_ENUM(CFIndex, LSMCMode) {
  * @return kLSMCNoSuchCategory Specified category doesn’t exist.
  * @return kLSMCErr Other errors.
  *
- * If current mode is kLSMCEvaluation, on successful return, this method will set
- * mode to kLSMCTraining.
+ * If the current mode is kLSMCEvaluation, on successful return, this method will have set
+ * the mode to kLSMCTraining.
  */
 - (OSStatus)addTrainingData:(NSData *)data
 				 toCategory:(NSString *)name;
