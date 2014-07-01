@@ -5,9 +5,9 @@ NOTE: Some of the functionality requires an internet connection.
 
 ## 1. What is this project?
 
-LSMSmartCategorizer uses Latent Semantic Mapping (LSM) framework to 
+LSMSmartCategorizer uses the Latent Semantic Mapping (LSM) framework to
 categorize news feeds. It intends to provide an example of basic usage 
-of LSM framework.
+of the LSM framework.
 
 Sadly, the PubSub framework that is used herein has been deprecated as of 10.9. 
 You are very much welcome to write a better sample app using another way to 
@@ -21,9 +21,10 @@ To configure this project, you should first run
 
 There are nineteen source files in this project. You should focus on 
 five of them, which are contained in an external submodule:
-LSMClassifier.h/.m 
-LSMClassifierResults.h/.m
-LSMClassifierResultsPrivate.m. 
+
+* LSMClassifier.h/.m 
+* LSMClassifierResults.h/.m
+* LSMClassifierResultsPrivate.m. 
 
 LSM framework is a Carbon framework. The five files listed above implement two
 Objective-C classes, which encapsulate all LSM functionalities required 
