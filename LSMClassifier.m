@@ -135,6 +135,14 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	return noErr;
 }
 
+- (BOOL)processString:(NSString *)string
+		  intoLSMText:(LSMTextRef)lsmText
+		  withOptions:(CFOptionFlags)options;
+{
+	OSStatus result = LSMTextAddWords(lsmText, (__bridge CFStringRef)string, CFLocaleGetSystem(), options);
+	return result == noErr;
+}
+
 - (OSStatus)addTrainingString:(NSString *)string
 				   toCategory:(NSString *)name
 				  withOptions:(CFOptionFlags)options
@@ -146,7 +154,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	
 	// Convert the input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
-	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)string, CFLocaleGetSystem(), options) != noErr) {
+	if ([self processString:string intoLSMText:lsmText withOptions:options] == NO) {
 		CFRelease(lsmText);
 		return kLSMCErr;
 	}
@@ -178,7 +186,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 {
 	// Convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
-	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)string, CFLocaleGetSystem(), options) != noErr) {
+	if ([self processString:string intoLSMText:lsmText withOptions:options] == NO) {
 		CFRelease(lsmText);
 		return nil;
 	}

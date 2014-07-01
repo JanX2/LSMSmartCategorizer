@@ -87,6 +87,20 @@ typedef NS_ENUM(CFIndex, LSMCMode) {
 
 /*!
  * @abstract Add training text to category specified by name.
+ * @return YES On success.
+ * @return NO On errors.
+ *
+ * Can be overridden by subclasses to customize tokenization.
+ *
+ * options can be kLSMTextPreserveCase, kLSMTextPreserveAcronyms
+ * and/or kLSMTextApplySpamHeuristics.
+ */
+- (BOOL)processString:(NSString *)string
+		  intoLSMText:(LSMTextRef)lsmText
+		  withOptions:(CFOptionFlags)options;
+
+/*!
+ * @abstract Add training text to category specified by name.
  * @return noErr On success.
  * @return kLSMCNoSuchCategory Specified category doesn't exisit.
  * @return kLSMCErr Other errors.
