@@ -100,6 +100,16 @@ typedef NS_ENUM(CFIndex, LSMCMode) {
 		  withOptions:(CFOptionFlags)options;
 
 /*!
+ * @abstract Add training data to category specified by name.
+ * @return YES On success.
+ * @return NO On errors.
+ *
+ * Can be overridden by subclasses to customize tokenization.
+ */
+- (BOOL)processData:(NSData *)data
+		intoLSMText:(LSMTextRef)lsmText;
+
+/*!
  * @abstract Add training text to category specified by name.
  * @return noErr On success.
  * @return kLSMCNoSuchCategory Specified category doesn't exisit.
@@ -115,6 +125,18 @@ typedef NS_ENUM(CFIndex, LSMCMode) {
 				   toCategory:(NSString *)name
 				  withOptions:(CFOptionFlags)options;
 
+/*!
+ * @abstract Add training data to the category specified by name.
+ * @return noErr On success.
+ * @return kLSMCNoSuchCategory Specified category doesn’t exist.
+ * @return kLSMCErr Other errors.
+ *
+ * If current mode is kLSMCEvaluation, on successful return, this method will set
+ * mode to kLSMCTraining.
+ */
+- (OSStatus)addTrainingData:(NSData *)data
+				 toCategory:(NSString *)name;
+
 /**!
  * @abstract Evaluate input text and return the results.
  *
@@ -128,6 +150,17 @@ typedef NS_ENUM(CFIndex, LSMCMode) {
 - (LSMClassifierResults *)getResultsForString:(NSString *)text
 							   maxResultCount:(CFIndex)numOfResults
 									  options:(CFOptionFlags)options;
+
+/**!
+ * @abstract Evaluate input data and return the results.
+ *
+ * @param data			Data to be evaluated.
+ * @param numOfResults	Maximum number of results to be returned.
+ *
+ * If current mode is kLSMCTraining, this method will set mode to kLSMCEvaluation.
+ */
+- (LSMClassifierResults *)getResultsForData:(NSData	*)data
+							 maxResultCount:(CFIndex)numOfResults;
 
 /**!
  * @abstract Return number of categories in the map.

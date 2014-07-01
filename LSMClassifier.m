@@ -143,7 +143,48 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	return result == noErr;
 }
 
+- (BOOL)processData:(NSData *)data
+		intoLSMText:(LSMTextRef)lsmText;
+{
+	return kLSMCErr;
+}
+
+- (BOOL)processObject:(id)object
+		  intoLSMText:(LSMTextRef)lsmText
+			  options:(CFOptionFlags)options
+{
+	BOOL didProcess = NO;
+	
+	if ([object isKindOfClass:[NSString class]]) {
+		NSString *string = (NSString *)object;
+		didProcess = [self processString:string intoLSMText:lsmText withOptions:options];
+	}
+	else if ([object isKindOfClass:[NSData class]]) {
+		NSData *data = (NSData *)object;
+		didProcess = [self processData:data intoLSMText:lsmText];
+	}
+	
+	return didProcess;
+}
+
 - (OSStatus)addTrainingString:(NSString *)string
+				   toCategory:(NSString *)name
+				  withOptions:(CFOptionFlags)options;
+{
+	return [self addTrainingObject:string
+						toCategory:name
+					   withOptions:options];
+}
+
+- (OSStatus)addTrainingData:(NSData *)data
+				 toCategory:(NSString *)name;
+{
+	return [self addTrainingObject:data
+						toCategory:name
+					   withOptions:0];
+}
+
+- (OSStatus)addTrainingObject:(id)object
 				   toCategory:(NSString *)name
 				  withOptions:(CFOptionFlags)options
 {
@@ -152,9 +193,13 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 		return kLSMCNoSuchCategory;
 	}
 	
-	// Convert the input text into LSMText text.
+	// Convert input into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
-	if ([self processString:string intoLSMText:lsmText withOptions:options] == NO) {
+	
+	BOOL didProcess = [self processObject:object
+							  intoLSMText:lsmText
+								  options:options];
+	if (didProcess == NO) {
 		CFRelease(lsmText);
 		return kLSMCErr;
 	}
@@ -182,11 +227,32 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
 - (LSMClassifierResults *)getResultsForString:(NSString *)string
 							   maxResultCount:(CFIndex)numOfResults
+									  options:(CFOptionFlags)options;
+{
+	return [self getResultsForObject:string
+					  maxResultCount:numOfResults
+							 options:options];
+}
+
+- (LSMClassifierResults *)getResultsForData:(NSData	*)data
+							 maxResultCount:(CFIndex)numOfResults;
+{
+	return [self getResultsForObject:data
+					  maxResultCount:numOfResults
+							 options:0];
+}
+
+- (LSMClassifierResults *)getResultsForObject:(id)object
+							   maxResultCount:(CFIndex)numOfResults
 									  options:(CFOptionFlags)options
 {
-	// Convert input text into LSMText text.
+	// Convert input into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
-	if ([self processString:string intoLSMText:lsmText withOptions:options] == NO) {
+	
+	BOOL didProcess = [self processObject:object
+							  intoLSMText:lsmText
+								  options:options];
+	if (didProcess == NO) {
 		CFRelease(lsmText);
 		return nil;
 	}
