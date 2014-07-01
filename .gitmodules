@@ -1,0 +1,3 @@
+[submodule "External/LSMClassifier"]
+	path = External/LSMClassifier
+	url = git@github.com:JanX2/LSMClassifier.git

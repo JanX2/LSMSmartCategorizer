@@ -178,6 +178,7 @@
 				90EFE3B20A699A92000FD9C9 /* LSMClassifierResultsPrivate.h */,
 			);
 			name = "LSM Classes";
+			path = External/LSMClassifier;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
