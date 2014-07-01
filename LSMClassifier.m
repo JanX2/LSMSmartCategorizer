@@ -137,7 +137,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
 - (OSStatus)addTrainingString:(NSString *)text
 				   toCategory:(NSString *)name
-				  withOptions:(UInt32)options
+				  withOptions:(CFOptionFlags)options
 {
 	NSNumber *mapId = _catNameToIdMap[name];
 	if (!mapId) {
@@ -174,7 +174,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
 - (LSMClassifierResults *)getResultsForString:(NSString *)text
 							   maxResultCount:(SInt32)numOfResults
-									  options:(UInt32)options
+									  options:(CFOptionFlags)options
 {
 	// Convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);

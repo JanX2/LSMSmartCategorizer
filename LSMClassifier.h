@@ -99,7 +99,7 @@ typedef NS_ENUM(SInt32, LSMCMode) {
  */
 - (OSStatus)addTrainingString:(NSString *)text
 				   toCategory:(NSString *)name
-				  withOptions:(UInt32)options;
+				  withOptions:(CFOptionFlags)options;
 
 /**!
  * @abstract Evaluate input text and return the results.
@@ -113,7 +113,7 @@ typedef NS_ENUM(SInt32, LSMCMode) {
  */
 - (LSMClassifierResults *)getResultsForString:(NSString *)text
 							   maxResultCount:(SInt32)numOfResults
-									  options:(UInt32)options;
+									  options:(CFOptionFlags)options;
 
 /**!
  * @abstract Return number of categories in the map.
