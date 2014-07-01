@@ -174,11 +174,11 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 
 - (LSMClassifierResults *)getResultsForString:(NSString *)text
 							   maxResultCount:(SInt32)numOfResults
-									  options:(UInt32)textOption
+									  options:(UInt32)options
 {
 	// Convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
-	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), textOption) != noErr) {
+	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), options) != noErr) {
 		CFRelease(lsmText);
 		return nil;
 	}

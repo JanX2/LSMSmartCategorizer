@@ -106,14 +106,14 @@ typedef NS_ENUM(SInt32, LSMCMode) {
  *
  * @param text			Text to be evaluated.
  * @param numOfResults	Maximum number of results to be returned.
- * @param textOption	Option for pre-process of text. It can be kLSMTextPreserveCase,
+ * @param options		Options for pre-processing of the text. Can be set to kLSMTextPreserveCase,
  *                      kLSMTextPreserveAcronyms and/or kLSMTextApplySpamHeuristics.
  *
  * If current mode is kLSMCTraining, this method will set mode to kLSMCEvaluation.
  */
 - (LSMClassifierResults *)getResultsForString:(NSString *)text
 							   maxResultCount:(SInt32)numOfResults
-									  options:(UInt32)textOption;
+									  options:(UInt32)options;
 
 /**!
  * @abstract Return number of categories in the map.
