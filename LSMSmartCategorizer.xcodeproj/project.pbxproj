@@ -56,7 +56,7 @@
 		CE1453B30A7873AD005E0F6B /* BaseWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseWindowController.m; sourceTree = "<group>"; };
 		CE559D0E0A68443100DD60AA /* PubSub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PubSub.framework; path = /System/Library/Frameworks/PubSub.framework; sourceTree = "<absolute>"; };
 		CE90D0BA0A6EB6BC0079089D /* AppHelp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AppHelp.txt; path = Resources/AppHelp.txt; sourceTree = "<group>"; };
-		CE90D1740A6ED6CF0079089D /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		CE90D1740A6ED6CF0079089D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CE9C16F60A672AF800F59C63 /* DataInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataInfo.h; sourceTree = "<group>"; };
 		CE9C16F70A672AF800F59C63 /* DataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataInfo.m; sourceTree = "<group>"; };
 		CEEED4690A6E936E00AD6C2D /* TrainingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainingWindowController.m; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				CE90D0BA0A6EB6BC0079089D /* AppHelp.txt */,
-				CE90D1740A6ED6CF0079089D /* ReadMe.txt */,
+				CE90D1740A6ED6CF0079089D /* README.md */,
 				90B1BF9F0A6C97CC00CBA154 /* test_urls.plist */,
 				90B1BFA00A6C97CC00CBA154 /* training_rss_categories.plist */,
 				8D1107310486CEB800E47090 /* Info.plist */,
