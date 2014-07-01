@@ -79,11 +79,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				90EFE3AE0A699A92000FD9C9 /* LSMClassifier.h */,
-				90EFE3AF0A699A92000FD9C9 /* LSMClassifier.m */,
-				90EFE3B00A699A92000FD9C9 /* LSMClassifierResults.h */,
-				90EFE3B10A699A92000FD9C9 /* LSMClassifierResults.m */,
-				90EFE3B20A699A92000FD9C9 /* LSMClassifierResultsPrivate.h */,
 				CE0E18AF0A67189A00B569B0 /* TrainingWindowController.h */,
 				CEEED4690A6E936E00AD6C2D /* TrainingWindowController.m */,
 				CE9C16F60A672AF800F59C63 /* DataInfo.h */,
@@ -132,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
+				3D5DDE471962FE2E0020326A /* LSM Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -170,6 +166,18 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3D5DDE471962FE2E0020326A /* LSM Classes */ = {
+			isa = PBXGroup;
+			children = (
+				90EFE3AE0A699A92000FD9C9 /* LSMClassifier.h */,
+				90EFE3AF0A699A92000FD9C9 /* LSMClassifier.m */,
+				90EFE3B00A699A92000FD9C9 /* LSMClassifierResults.h */,
+				90EFE3B10A699A92000FD9C9 /* LSMClassifierResults.m */,
+				90EFE3B20A699A92000FD9C9 /* LSMClassifierResultsPrivate.h */,
+			);
+			name = "LSM Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
