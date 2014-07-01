@@ -135,7 +135,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	return noErr;
 }
 
-- (OSStatus)addTrainingString:(NSString *)text
+- (OSStatus)addTrainingString:(NSString *)string
 				   toCategory:(NSString *)name
 				  withOptions:(CFOptionFlags)options
 {
@@ -146,7 +146,7 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	
 	// Convert the input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
-	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), options) != noErr) {
+	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)string, CFLocaleGetSystem(), options) != noErr) {
 		CFRelease(lsmText);
 		return kLSMCErr;
 	}
@@ -172,13 +172,13 @@ NSString * const LSMCategoryNameToIDMapKey = @"NameToIdMap";
 	}
 }
 
-- (LSMClassifierResults *)getResultsForString:(NSString *)text
+- (LSMClassifierResults *)getResultsForString:(NSString *)string
 							   maxResultCount:(CFIndex)numOfResults
 									  options:(CFOptionFlags)options
 {
 	// Convert input text into LSMText text.
 	LSMTextRef lsmText = LSMTextCreate(kCFAllocatorDefault, _map);
-	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)text, CFLocaleGetSystem(), options) != noErr) {
+	if (LSMTextAddWords(lsmText, (__bridge CFStringRef)string, CFLocaleGetSystem(), options) != noErr) {
 		CFRelease(lsmText);
 		return nil;
 	}
