@@ -41,8 +41,8 @@ NSString * const LSMCResultScoreKey = @"score";
 		_results = [NSMutableArray new];
 		
 		// Put individual result into the array.
-		SInt32 count = LSMResultGetCount(lsmResult);
-		for (SInt32 i = 0; i < count; i++) {
+		CFIndex count = LSMResultGetCount(lsmResult);
+		for (CFIndex i = 0; i < count; i++) {
 			NSMutableDictionary *thisResult = [NSMutableDictionary new];
 			
 			// Get the category id of the ith result.

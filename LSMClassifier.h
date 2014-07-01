@@ -54,7 +54,7 @@ typedef NS_ENUM(OSStatus, LSMCError) {
  * @abstract Indicate the mode the classifier is currently in, traning mode or
  *           evaluation mode.
  */
-typedef NS_ENUM(SInt32, LSMCMode) {
+typedef NS_ENUM(CFIndex, LSMCMode) {
 	kLSMCTraining = 0,
 	kLSMCEvaluation
 };
@@ -112,7 +112,7 @@ typedef NS_ENUM(SInt32, LSMCMode) {
  * If current mode is kLSMCTraining, this method will set mode to kLSMCEvaluation.
  */
 - (LSMClassifierResults *)getResultsForString:(NSString *)text
-							   maxResultCount:(SInt32)numOfResults
+							   maxResultCount:(CFIndex)numOfResults
 									  options:(CFOptionFlags)options;
 
 /**!
